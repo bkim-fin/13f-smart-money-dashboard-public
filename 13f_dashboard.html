@@ -1,0 +1,1661 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Money Signal Dashboard</title>
+  <script defer data-domain="bkim-fin.github.io" src="https://plausible.io/js/script.js"></script>
+  <style>
+    :root {
+      --bg: #f3f5f7;
+      --panel: #ffffff;
+      --panel-soft: #fafbfc;
+      --ink: #171a1f;
+      --muted: #687385;
+      --line: #d8dee8;
+      --soft: #edf1f5;
+      --blue: #315fce;
+      --green: #25745a;
+      --red: #b84b4b;
+      --amber: #a46517;
+      --violet: #6552b8;
+      --slate: #222b38;
+      --shadow: 0 16px 40px rgba(25, 31, 42, 0.08);
+      --shadow-soft: 0 6px 18px rgba(25, 31, 42, 0.05);
+      --radius: 10px;
+      font-family: "Pretendard", "Apple SD Gothic Neo", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% -10%, rgba(49, 95, 206, 0.10), transparent 32%),
+        linear-gradient(180deg, #f8fafc 0, var(--bg) 260px),
+        var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    button, select {
+      font: inherit;
+    }
+
+    .shell {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      align-items: center;
+      gap: 24px;
+      margin-bottom: 20px;
+      padding: 22px;
+      background: rgba(255, 255, 255, .78);
+      border: 1px solid rgba(216, 222, 232, .85);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(10px);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(30px, 3.6vw, 42px);
+      line-height: 1.04;
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      max-width: 820px;
+      font-size: 15px;
+    }
+
+    .source-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .link-btn,
+    .tab,
+    .icon-btn {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--slate);
+      border-radius: var(--radius);
+      min-height: 36px;
+      padding: 8px 12px;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .link-btn.primary {
+      background: var(--slate);
+      border-color: var(--slate);
+      color: white;
+    }
+
+    .link-btn.lang {
+      min-width: 46px;
+      font-weight: 750;
+    }
+
+    .icon-btn {
+      width: 38px;
+      padding: 0;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .link-btn:hover,
+    .tab:hover,
+    .icon-btn:hover {
+      border-color: #aeb8c6;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .kpis {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 14px;
+    }
+
+    .panel,
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .card {
+      position: relative;
+      padding: 18px;
+      min-height: 116px;
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 3px;
+      background: var(--blue);
+    }
+
+    .card:nth-child(2)::before { background: var(--green); }
+    .card:nth-child(3)::before { background: var(--amber); }
+    .card:nth-child(4)::before { background: var(--violet); }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .summary-item {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px 15px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .summary-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .label {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-weight: 750;
+    }
+
+    .metric {
+      font-size: 28px;
+      font-weight: 780;
+      letter-spacing: 0;
+    }
+
+    .risk-meter {
+      display: grid;
+      gap: 8px;
+    }
+
+    .risk-value {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .risk-value strong {
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .risk-value span {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .risk-track {
+      position: relative;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #4f8f70 0%, #d2a64b 55%, #bf5151 100%);
+      overflow: hidden;
+    }
+
+    .risk-marker {
+      position: absolute;
+      top: -4px;
+      width: 4px;
+      height: 20px;
+      border-radius: 999px;
+      background: var(--ink);
+      transform: translateX(-2px);
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .layout {
+      grid-template-columns: 268px minmax(0, 1fr);
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 16px;
+      padding: 14px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .filter-group {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      min-height: 38px;
+      padding: 8px 10px;
+      background: var(--panel);
+      color: var(--ink);
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .tab.active {
+      background: var(--slate);
+      color: #fff;
+      border-color: var(--slate);
+    }
+
+    .panel {
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .title-stack {
+      display: grid;
+      gap: 3px;
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: 0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      table-layout: fixed;
+    }
+
+    .table-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: auto;
+      background: var(--panel);
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      text-align: left;
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      border-bottom: 1px solid var(--line);
+      padding: 11px 12px;
+      background: var(--panel-soft);
+    }
+
+    td {
+      border-bottom: 1px solid var(--soft);
+      padding: 15px 12px;
+      vertical-align: middle;
+    }
+
+    th:nth-child(1), td:nth-child(1) { width: 150px; }
+    th:nth-child(2), td:nth-child(2) { width: 190px; }
+    th:nth-child(3), td:nth-child(3) { width: 360px; }
+    th:nth-child(4), td:nth-child(4) { width: 260px; }
+    th:nth-child(5), td:nth-child(5) { width: 150px; }
+    th:nth-child(6), td:nth-child(6) { width: 104px; }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tbody tr {
+      transition: background .15s ease;
+    }
+
+    tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .ticker {
+      font-weight: 800;
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .sector-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 28px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--slate);
+      font-size: 12px;
+      font-weight: 760;
+      white-space: nowrap;
+    }
+
+    .sector-chip::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .sector-ai::before,
+    .sector-semiconductor::before { background: var(--blue); }
+    .sector-platform::before { background: var(--green); }
+    .sector-energy::before,
+    .sector-commodity::before { background: var(--amber); }
+    .sector-software::before { background: var(--violet); }
+    .sector-china::before { background: var(--red); }
+
+    .stock-cell {
+      display: grid;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .stock-name {
+      color: var(--muted);
+      font-size: 12px;
+      max-width: 160px;
+      overflow-wrap: anywhere;
+    }
+
+    .thesis-cell {
+      display: grid;
+      gap: 7px;
+      min-width: 0;
+      max-width: 420px;
+    }
+
+    .move-line {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .reason-text {
+      color: #333b48;
+      font-size: 13px;
+      line-height: 1.55;
+      max-width: 340px;
+      text-wrap: pretty;
+    }
+
+    .basis-text {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      max-width: 330px;
+      padding: 5px 8px;
+      border-radius: 8px;
+      background: var(--panel-soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .mini-list {
+      margin: 0;
+      padding-left: 17px;
+      display: grid;
+      gap: 5px;
+    }
+
+    .mini-list li {
+      padding-left: 2px;
+    }
+
+    .guide-cell {
+      max-width: 270px;
+      color: #333b48;
+      font-size: 13px;
+      line-height: 1.5;
+      text-wrap: pretty;
+    }
+
+    .house-cell {
+      min-width: 0;
+      max-width: 150px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .confidence {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .confidence-track {
+      height: 6px;
+      width: 72px;
+      background: var(--soft);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .confidence-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--green);
+    }
+
+    th:last-child,
+    td:last-child {
+      position: sticky;
+      right: 0;
+      background: var(--panel);
+      box-shadow: -8px 0 12px rgba(23, 31, 45, 0.04);
+    }
+
+    th:last-child {
+      background: var(--panel-soft);
+      z-index: 3;
+    }
+
+    .trend-cell {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .sparkline {
+      width: 132px;
+      height: 34px;
+      display: block;
+    }
+
+    .trend-meta {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .trend-up { color: var(--green); font-weight: 800; }
+    .trend-down { color: var(--red); font-weight: 800; }
+    .trend-flat { color: var(--muted); font-weight: 800; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--slate);
+      font-size: 12px;
+      font-weight: 740;
+      white-space: nowrap;
+    }
+
+    .pill.buy { background: #e4f5ed; color: var(--green); }
+    .pill.sell { background: #f9e8e8; color: var(--red); }
+    .pill.watch { background: #fff3dc; color: var(--amber); }
+    .pill.neutral { background: #e9eef6; color: #40516b; }
+
+    .split {
+      grid-template-columns: 1.1fr .9fr;
+      align-items: stretch;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 145px minmax(0, 1fr) 52px;
+      gap: 10px;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--soft);
+    }
+
+    .bar-row:last-child { border-bottom: 0; }
+
+    .bar-track {
+      height: 10px;
+      background: var(--soft);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .bar-fill.red { background: var(--red); }
+    .bar-fill.green { background: var(--green); }
+    .bar-fill.amber { background: var(--amber); }
+    .bar-fill.violet { background: var(--violet); }
+
+    .decision {
+      display: grid;
+      gap: 12px;
+    }
+
+    .allocation {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr) 72px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .status-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .status-item {
+      display: grid;
+      grid-template-columns: 18px 1fr;
+      gap: 8px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-soft);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      margin-top: 5px;
+      background: var(--muted);
+    }
+
+    .dot.green { background: var(--green); }
+    .dot.amber { background: var(--amber); }
+    .dot.red { background: var(--red); }
+    .dot.blue { background: var(--blue); }
+
+    .sources {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .sources a {
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 1000px) {
+      .kpis,
+      .split,
+      .layout,
+      .summary-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .source-row {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell { padding: 14px; }
+      .topbar { padding: 16px; }
+      .panel { padding: 14px; }
+      table { min-width: 1040px; }
+      th:last-child,
+      td:last-child {
+        position: static;
+        box-shadow: none;
+      }
+      .bar-row { grid-template-columns: 110px minmax(0, 1fr) 44px; }
+      .allocation { grid-template-columns: 92px minmax(0, 1fr) 58px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="topbar">
+      <div>
+        <h1>Smart Money Signal Dashboard</h1>
+        <p class="subtitle" id="subtitleText">선택된 기관군의 공통 신규 매수, 전량 매도, 섹터 축소 이유, 현금/주식/원자재 가이드를 추적합니다.</p>
+      </div>
+      <div class="source-row">
+        <button class="link-btn primary" id="factCheckBtn">검증</button>
+        <button class="link-btn lang" id="languageBtn">EN</button>
+      </div>
+    </section>
+
+    <section class="grid kpis" id="kpis"></section>
+
+    <section class="summary-strip">
+      <div class="summary-item">
+        <strong id="summaryCurrentTitle">현재 읽기</strong>
+        <span class="note" id="summaryCurrentText">Q2 기관 매수 신호와 반도체 공급망 반등은 일치하지만, 높은 금리와 좁은 시장 폭 때문에 선별 접근이 필요합니다.</span>
+      </div>
+      <div class="summary-item">
+        <strong id="summaryNextTitle">다음 확인</strong>
+        <span class="note" id="summaryNextText">Q3 분기 데이터에서 GOOGL, V/MA, SPGI/ICE, AI 반도체 매수가 반복되는지.</span>
+      </div>
+      <div class="summary-item">
+        <strong id="summaryDefenseTitle">방어 장치</strong>
+        <span class="note" id="summaryDefenseText">현금/단기채 20~30%, 금/원자재 8~12%를 변동성 완충재로 유지.</span>
+      </div>
+    </section>
+
+    <section class="grid layout">
+      <aside class="panel sidebar">
+        <div class="filter-group">
+          <span class="label">View</span>
+          <div class="tabs" id="tabs"></div>
+        </div>
+        <div class="filter-group">
+          <label class="label" for="sectorFilter">Sector</label>
+          <select id="sectorFilter"></select>
+        </div>
+        <div class="filter-group">
+          <label class="label" for="signalFilter">Signal</label>
+          <select id="signalFilter">
+            <option value="all">전체</option>
+            <option value="buy">신규/확대</option>
+            <option value="sell">축소/전량 매도</option>
+            <option value="watch">의견 분화/관찰</option>
+          </select>
+        </div>
+        <div class="status-list" id="checklist"></div>
+      </aside>
+
+      <section>
+        <div class="panel" id="overviewPanel">
+          <div class="panel-title">
+            <h2 id="overviewTitle">현재 판단</h2>
+            <span class="pill watch" id="cashBadge">현금 20~30% 유지</span>
+          </div>
+          <div class="grid split">
+            <div>
+              <div id="signalBars"></div>
+            </div>
+            <div class="decision" id="allocationGuide"></div>
+          </div>
+        </div>
+
+        <div class="panel" id="tablePanel">
+          <div class="panel-title">
+            <div class="title-stack">
+              <h2 id="tableTitle">공통 시그널</h2>
+              <span class="note" id="tableMeta">필터된 시그널</span>
+            </div>
+            <div class="table-actions">
+              <span class="pill neutral" id="priceMeta">가격 데이터 대기</span>
+              <button class="icon-btn" id="copyBtn" title="현재 표 요약 복사">⧉</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead id="tableHead"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel hidden" id="factCheckPanel">
+          <div class="panel-title">
+            <h2 id="factCheckTitle">검증 로그</h2>
+            <span class="pill neutral" id="factCheckBadge">근거 확인 / 해석 분리</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th id="factHeadItem">항목</th>
+                  <th id="factHeadStatus">상태</th>
+                  <th id="factHeadEvidence">검증 메모</th>
+                  <th id="factHeadCaveat">주의점</th>
+                </tr>
+              </thead>
+              <tbody id="factCheckRows"></tbody>
+            </table>
+          </div>
+          <div class="sources" id="factCheckSources"></div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">
+            <h2 id="calendarTitle">업데이트 캘린더</h2>
+            <span class="pill neutral" id="calendarBadge">다음 핵심 체크: 2026년 11월 중순</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th id="calendarHeadDate">시점</th>
+                  <th id="calendarHeadTask">할 일</th>
+                  <th id="calendarHeadQuestion">확인할 질문</th>
+                  <th id="calendarHeadAction">포트폴리오 행동</th>
+                </tr>
+              </thead>
+              <tbody id="calendarRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    let priceData = {};
+
+    const dashboard = {
+      asOf: "2026-06-08",
+      latest13f: "Q1 2026 / holdings as of 2026-03-31",
+      reviewWindow: "2026-05-15 전후",
+      nextWindow: "Q2 2026 분기 데이터: 2026-08-14~17 전후",
+      riskMode: {
+        score: 58,
+        label: "Balanced",
+        note: "주식은 유지하되 현금/금 방어를 같이 둔다"
+      },
+      kpis: [
+        { label: "Latest 분기 데이터", metric: "Q1 2026", note: "확인 기준 2026-05-15 전후" },
+        { label: "Strongest Signal", metric: "AI Stack", note: "MSFT, AMZN, TSM, AVGO, AMAT" },
+        { label: "Risk Mode", metric: "risk", note: "" },
+        { label: "Next Check", metric: "Aug", note: "Q2 2026 분기 데이터 반영" }
+      ],
+      signalBars: [
+        { name: "AI 인프라/반도체", score: 88, color: "blue" },
+        { name: "플랫폼 빅테크", score: 82, color: "green" },
+        { name: "퀄리티 금융/결제", score: 62, color: "violet" },
+        { name: "에너지/원자재", score: 48, color: "amber" },
+        { name: "고밸류 소프트웨어", score: 34, color: "red" }
+      ],
+      allocations: [
+        { asset: "미국 주식", range: "55~65%", color: "green" },
+        { asset: "AI 위성", range: "10~15%", color: "blue" },
+        { asset: "금/원자재", range: "5~10%", color: "amber" },
+        { asset: "현금/단기채", range: "15~25%", color: "violet" }
+      ],
+      checklist: [
+        { status: "green", title: "분기 분기 데이터", text: "업데이트 직후 신규/전량 매도/상위 비중 변화 확인" },
+        { status: "blue", title: "월간 검증", text: "섹터 ETF 상대강도, 실적 revision, 금리 확인" },
+        { status: "amber", title: "리스크", text: "시장 폭 축소, 30년물 금리, AI 쏠림 과열 체크" },
+        { status: "red", title: "금지", text: "분기 데이터 뉴스만 보고 당일 추격매수 금지" }
+      ],
+      rows: [
+        {
+          type: "buy",
+          ticker: "MSFT",
+          symbols: ["MSFT"],
+          name: "Microsoft",
+          sector: "AI/Software",
+          houses: "기관군 A, 기관군 B, 기관군 C",
+          move: "기관군 A 신규 대형 편입",
+          reason: "엔터프라이즈 소프트웨어, 클라우드, AI 인프라가 결합된 방어적 성장 자산",
+          guide: "Core 또는 Satellite 상단. 단, 밸류에이션 부담 시 분할 접근",
+          confidence: "높음"
+        },
+        {
+          type: "buy",
+          ticker: "AMZN",
+          symbols: ["AMZN"],
+          name: "Amazon",
+          sector: "Platform/Consumer",
+          houses: "기관군 A, 기관군 B, 기관군 C",
+          move: "핵심 비중 유지/확대",
+          reason: "AWS, 광고, 이커머스 마진 회복을 동시에 사는 구조",
+          guide: "Core 후보. 경기 둔화와 AWS 경쟁은 리스크",
+          confidence: "중상"
+        },
+        {
+          type: "buy",
+          ticker: "TSM",
+          symbols: ["TSM"],
+          name: "Taiwan Semiconductor",
+          sector: "Semiconductor",
+          houses: "기관군 A, 기관군 B, 기관군 C",
+          move: "파운드리 익스포저 확대",
+          reason: "AI 공급망의 병목 자산. GPU보다 넓은 AI 인프라 베팅",
+          guide: "SMH/TSM 방식의 분산 접근 선호",
+          confidence: "높음"
+        },
+        {
+          type: "buy",
+          ticker: "AVGO",
+          symbols: ["AVGO"],
+          name: "Broadcom",
+          sector: "Semiconductor",
+          houses: "기관군 A, 기관군 B, 기관군 C",
+          move: "AI 네트워킹/ASIC 레이어 확대",
+          reason: "맞춤형 AI 칩과 데이터센터 네트워킹 수혜",
+          guide: "고밸류 구간 추격보다 조정 시 위성 편입",
+          confidence: "중상"
+        },
+        {
+          type: "buy",
+          ticker: "AMAT/LRCX",
+          symbols: ["AMAT", "LRCX"],
+          name: "Applied Materials / Lam Research",
+          sector: "Semiconductor Equipment",
+          houses: "기관군 A, 기관군 B",
+          move: "장비주 바스켓 확대",
+          reason: "AI capex가 장비·공정 투자로 확산되는 구간",
+          guide: "개별보다 SMH 또는 장비 바스켓",
+          confidence: "중상"
+        },
+        {
+          type: "buy",
+          ticker: "META",
+          symbols: ["META"],
+          name: "Meta Platforms",
+          sector: "Platform/Communication",
+          houses: "기관군 A, 기관군 B, 기관군 C",
+          move: "다수 기관군 공통 보유",
+          reason: "광고 회복, AI 추천, 데이터 인프라, 자사주 조합",
+          guide: "강한 컨센서스이나 capex 부담 모니터링",
+          confidence: "높음"
+        },
+        {
+          type: "watch",
+          ticker: "GOOGL/GOOG",
+          symbols: ["GOOGL", "GOOG"],
+          name: "Alphabet",
+          sector: "Platform/AI",
+          houses: "기관군 A, 기관군 B vs 기관군 C",
+          move: "매수와 축소가 동시에 관찰",
+          reason: "저평가 퀄리티 플랫폼 논리와 AI 검색 리스크가 충돌",
+          guide: "의견 분화 종목. 다음 분기 데이터에서 확산 여부 확인",
+          confidence: "중간"
+        },
+        {
+          type: "sell",
+          ticker: "BABA",
+          symbols: ["BABA"],
+          name: "Alibaba",
+          sector: "China ADR",
+          houses: "기관군 A 등",
+          move: "비중 축소",
+          reason: "중국 정책, 지정학, 소비 회복 불확실성",
+          guide: "고위험 위성으로만 제한. Core 편입 부적합",
+          confidence: "중상"
+        },
+        {
+          type: "sell",
+          ticker: "NVDA",
+          symbols: ["NVDA"],
+          name: "NVIDIA",
+          sector: "Semiconductor",
+          houses: "기관군 A/기관군 B 일부 축소, 기관군 C는 확대",
+          move: "의견 분화",
+          reason: "AI 대표주 과열을 줄이고 병목 자산으로 분산하려는 움직임",
+          guide: "단일 과집중 금지. SMH/TSM/AVGO로 분산",
+          confidence: "중간"
+        },
+        {
+          type: "sell",
+          ticker: "CRM/NOW/WDAY",
+          symbols: ["CRM", "NOW", "WDAY"],
+          name: "Enterprise SaaS Basket",
+          sector: "Software",
+          houses: "기관군 A 관련 흐름",
+          move: "일부 전량 매도",
+          reason: "AI 수혜가 직접적인 반도체·파운드리 대비 상대 매력 저하",
+          guide: "실적 없는 고PER 소프트웨어는 비중 제한",
+          confidence: "중간"
+        },
+        {
+          type: "sell",
+          ticker: "CVX",
+          symbols: ["CVX"],
+          name: "Chevron",
+          sector: "Energy",
+          houses: "기관군 A",
+          move: "비중 축소",
+          reason: "유가·지정학 변수는 남아 있으나 장기 Core보다 전술 포지션 성격",
+          guide: "XLE/OXY/CVX 합산 3~7% 전술 접근",
+          confidence: "중간"
+        },
+        {
+          type: "watch",
+          ticker: "GLD/GDX",
+          symbols: ["GLD", "GDX"],
+          name: "Gold / Gold Miners",
+          sector: "Commodity",
+          houses: "Market proxy only",
+          move: "포트폴리오 보험 후보",
+          reason: "지정학, 달러, 실질금리, 중앙은행 매수와 연결",
+          guide: "금 5~8%, 금광주는 고변동 위성",
+          confidence: "중간"
+        }
+      ],
+      calendar: [
+        {
+          date: "매주",
+          task: "가격·금리·원자재 체크",
+          question: "AI 주도 상승이 너무 좁아졌나? 30년물 금리가 재상승하나?",
+          action: "현금/금 비중 유지 여부 점검"
+        },
+        {
+          date: "매월 말",
+          task: "섹터 ETF 상대강도 확인",
+          question: "XLK/SMH만 오르는지, XLI/XLF/XLE로 확산되는지?",
+          action: "Satellite 비중만 조정"
+        },
+        {
+          date: "2026-08-14~17",
+          task: "Q2 2026 분기 데이터 업데이트",
+          question: "MSFT/AMZN/META/TSM/AVGO 매수가 반복됐나?",
+          action: "반복 매수는 Core 후보, 1회성 매수는 Watchlist"
+        },
+        {
+          date: "2026-11-14~17",
+          task: "Q3 2026 분기 데이터 업데이트",
+          question: "원자재/에너지/금 ETF 비중이 실제로 늘었나?",
+          action: "원자재를 보험에서 수익 포지션으로 올릴지 판단"
+        }
+      ],
+      sources: [],
+      factChecks: [
+        {
+          item: "분기 데이터 주기",
+          status: "확인됨",
+          evidence: "공개 자료 기준: 대형 기관 보유 데이터는 분기 종료 후 시차를 두고 확인됩니다.",
+          caveat: "실시간 보유가 아니라 최대 45일 이상 늦은 스냅샷."
+        },
+        {
+          item: "Q1 2026 기준 시점",
+          status: "확인됨",
+          evidence: "Q1 2026 주요 분기 데이터는 2026-03-31 보유분, 2026-05-15 전후 업데이트 사이클.",
+          caveat: "4~6월 중 이미 변경됐을 수 있음."
+        },
+        {
+          item: "META/MSFT/NVDA/GOOGL 컨센서스",
+          status: "확인됨",
+          evidence: "익명 처리된 집계 기준 META, MSFT, V, GOOGL, NVDA가 상위 공통 보유.",
+          caveat: "보유자 수 기준이지 모든 기관군가 신규 매수했다는 뜻은 아님."
+        },
+        {
+          item: "기관군 A의 MSFT 신규 편입",
+          status: "확인됨",
+          evidence: "익명 처리된 Q1 2026 분기 데이터에서 MSFT가 핵심 신규 포지션으로 확인.",
+          caveat: "편입 사유는 분기 데이터에 직접 적히지 않으므로 AI/클라우드 해석은 보조 근거 기반 추론."
+        },
+        {
+          item: "익명 기관군의 반도체 스택 확대",
+          status: "확인됨",
+          evidence: "Q1 2026 자료에서 TSM, NVDA, AVGO, AMAT 등 AI 하드웨어/장비 비중 확대가 관찰.",
+          caveat: "분기 말 보유분이므로 단기 트레이딩 여부는 알 수 없음."
+        },
+        {
+          item: "금/원자재 가이드",
+          status: "해석",
+          evidence: "공개 원자재 시장 자료는 금 강세 요인으로 지정학, 달러, 금리, 중앙은행 수요를 제시.",
+          caveat: "분기 데이터는 현물 원자재를 직접 보여주지 않아 ETF/관련주로만 간접 확인."
+        },
+        {
+          item: "현금 15~25% 가이드",
+          status: "해석",
+          evidence: "공개 시장 자료는 AI 중심의 좁은 리더십, 높은 장기금리, S&P 500 forward P/E 부담을 함께 언급.",
+          caveat: "개인별 투자기간과 손실 허용도에 따라 달라짐."
+        }
+      ]
+    };
+
+    const views = [
+      { id: "all", label: "전체" },
+      { id: "buy", label: "새로 담은 종목" },
+      { id: "sell", label: "미련 없이 뺀 종목" },
+      { id: "watch", label: "의견 분화" }
+    ];
+
+    let activeView = "all";
+    let currentLang = localStorage.getItem("dashboardLang") || "ko";
+
+    const $ = (selector) => document.querySelector(selector);
+
+    const i18n = {
+      "선택된 기관군의 공통 신규 매수, 전량 매도, 섹터 축소 이유, 현금/주식/원자재 가이드를 추적합니다.": "Tracks common new buys, full exits, sector de-risking, and cash/equity/commodity guidance from selected houses.",
+      "검증": "Verify",
+      "현재 읽기": "Current Read",
+      "Q2 기관 매수 신호와 반도체 공급망 반등은 일치하지만, 높은 금리와 좁은 시장 폭 때문에 선별 접근이 필요합니다.": "Q2 institutional buying signals now align with the semiconductor supply-chain rebound, but high rates and narrow market breadth still call for selective exposure.",
+      "다음 확인": "Next Check",
+      "Q3 분기 데이터에서 GOOGL, V/MA, SPGI/ICE, AI 반도체 매수가 반복되는지.": "Check whether Q3 data repeats buying in GOOGL, V/MA, SPGI/ICE, and AI semiconductors.",
+      "방어 장치": "Defensive Buffer",
+      "현금/단기채 20~30%, 금/원자재 8~12%를 변동성 완충재로 유지.": "Keep cash/short-term bonds at 20-30% and gold/commodities at 8-12% as volatility buffers.",
+      "보유 기준 2026-06-30 / 업데이트 2026-08-14 전후": "Holdings as of 2026-06-30 / filed around 2026-08-14",
+      "GOOGL, MSFT, NVDA, AVGO, V, MA": "GOOGL, MSFT, NVDA, AVGO, V, MA",
+      "Q3 2026 분기 데이터 반영": "Q3 2026 quarterly update",
+      "기관 자금은 AI/반도체, 플랫폼 빅테크, 결제/데이터 인프라로 재강화. 단, 분기 데이터 지연과 밸류에이션 부담 때문에 현금 완전 축소는 부적절": "Institutional capital re-accelerated toward AI/semis, platform big tech, and payments/data infrastructure. Still, data lag and valuation risk argue against fully cutting cash.",
+      "현재 판단": "Current View",
+      "현금 20~30% 유지": "Keep Cash 20-30%",
+      "검증 로그": "Verification Log",
+      "근거 확인 / 해석 분리": "Evidence Check / Interpretation Split",
+      "업데이트 캘린더": "Update Calendar",
+      "다음 핵심 체크: 2026년 11월 중순": "Next Key Check: mid-November 2026",
+      "전체": "All",
+      "새로 담은 종목": "New / Increased",
+      "미련 없이 뺀 종목": "Reduced / Exited",
+      "의견 분화": "Divergence",
+      "신규/확대": "New / Increased",
+      "축소/전량 매도": "Reduced / Exited",
+      "의견 분화/관찰": "Divergence / Watch",
+      "공통 시그널": "Consensus Signals",
+      "공통적으로 새로 담거나 늘린 종목": "Common New or Increased Positions",
+      "미련 없이 줄이거나 뺀 종목": "Common Reductions or Exits",
+      "의견이 갈리는 종목": "Divergent Names",
+      "섹터": "Sector",
+      "종목": "Ticker",
+      "7일 가격": "7D Price",
+      "움직임 + 이유": "Move + Rationale",
+      "가이드": "Guide",
+      "기관군": "Group",
+      "확신도": "Conviction",
+      "항목": "Item",
+      "상태": "Status",
+      "검증 메모": "Evidence",
+      "주의점": "Caveat",
+      "시점": "Timing",
+      "할 일": "Check",
+      "확인할 질문": "Question",
+      "포트폴리오 행동": "Portfolio Action",
+      "개 시그널 · 분기 데이터는 중기 자금 흐름으로 해석": " signals · interpret quarterly data as medium-term capital flow",
+      "가격 데이터 대기": "Price data pending",
+      "업데이트됨": "Updated",
+      "가격": "Prices",
+      "개": "",
+      "대표": "proxy",
+      "데이터 대기": "data pending",
+      "가격 데이터 없음": "No price data",
+      "1주 가격 추세": "7-day price trend",
+      "높음": "High",
+      "중상": "Med-High",
+      "중간": "Medium",
+      "낮음": "Low",
+      "확인됨": "Verified",
+      "해석": "Interpretation",
+      "Current Allocation Guide": "Current Allocation Guide",
+      "판단: 전량 현금화보다 현금 15~25%를 들고, Core 주식은 유지하며 AI/반도체는 분산합니다.": "View: keep core equities, avoid full cash-out, and diversify AI/semiconductor exposure.",
+      "미국 주식": "U.S. Equities",
+      "AI 위성": "AI Satellite",
+      "금/원자재": "Gold/Commodities",
+      "현금/단기채": "Cash/ST Bonds",
+      "AI 인프라/반도체": "AI Infrastructure/Semis",
+      "플랫폼 빅테크": "Platform Big Tech",
+      "퀄리티 금융/결제": "Quality Financials/Payments",
+      "에너지/전력/원자재": "Energy/Power/Commodities",
+      "고밸류 소프트웨어": "High-Valuation Software",
+      "Q2 분기 데이터 반영": "Q2 Data Reflected",
+      "신규/확대/축소/전량 매도 시그널 갱신 완료": "New, increased, reduced, and exit signals updated.",
+      "Q2 분기 데이터 유지": "Q2 Data Maintained",
+      "신규 분기 데이터 윈도우는 없음. Q2 공통 매수/매도 신호는 유지": "No new quarterly data window. Q2 common buy/sell signals maintained.",
+      "가격 갱신": "Price Updated",
+      "7일 가격 그래프를 2026-08-21 실행 기준으로 갱신": "7-day price charts refreshed as of the 2026-08-21 run.",
+      "월간 검증": "Monthly Check",
+      "AI·반도체 랠리가 실적 revision과 같이 가는지 확인": "Check whether AI/semi rallies are supported by earnings revisions.",
+      "리스크": "Risk",
+      "GOOGL·NVDA·AVGO 과열, 장기금리, 시장 폭 축소 체크": "Watch GOOGL/NVDA/AVGO overheating, long rates, and market breadth.",
+      "리스크 상향": "Risk Raised",
+      "10년물 4.7% 부근, 30년물 5%대, 유가 상승으로 기술주 할인율 부담 확대": "10-year yields near 4.7%, 30-year yields above 5%, and rising oil increase discount-rate pressure on tech.",
+      "금지": "Avoid",
+      "분기 데이터 직후 갭상승 종목 추격매수 금지": "Avoid chasing names that gap up after delayed public data.",
+      "공통 시그널 종목이라도 금리 급등일 추격매수 금지": "Avoid chasing consensus names on rate-spike days.",
+      "대형 신규/확대 편입": "Large new/increased position",
+      "공통 핵심 보유/확대": "Common core holding/increase",
+      "AI 반도체 재강화": "AI semiconductor exposure reinforced",
+      "공급망 바스켓 확대": "Supply-chain basket expanded",
+      "신규 편입": "New position",
+      "신규 저가매수 신호": "New buy-the-dip signal",
+      "전력 인프라 관심 확대": "Power infrastructure interest increased",
+      "주택건설 익스포저 확대": "Homebuilder exposure increased",
+      "비중 축소": "Reduced position",
+      "축소/전량 매도": "Reduced/exited",
+      "보험 포지션 유지": "Insurance position maintained",
+      "전술 관찰 상향": "Tactical watch upgraded",
+      "기관군 A가 Alphabet을 대규모로 늘렸고, 여러 대형 운용사도 AI 인프라와 검색/클라우드 현금흐름을 함께 평가": "기관군 A materially increased Alphabet, while large managers also value its AI infrastructure, search, and cloud cash flows.",
+      "AI 인프라, 클라우드, 엔터프라이즈 소프트웨어가 결합된 방어적 성장 자산으로 기관 컨센서스 유지": "Institutional consensus remains around Microsoft as a defensive growth asset combining AI infrastructure, cloud, and enterprise software.",
+      "Q2 분기 데이터 집계에서 AI 칩과 네트워킹/ASIC 레이어 매수 강도가 유지. 단일 GPU보다 AI 스택 전반으로 확산": "Q2 quarterly data shows continued buying in AI chips and networking/ASIC layers, broadening beyond single-GPU exposure.",
+      "위성 포지션 유지. 금리 급등 구간에는 NVDA 단일주보다 SMH, AVGO, TSM, MU, AMAT 분산과 분할 매수 선호": "Maintain satellite exposure. During rate spikes, prefer diversified and staged exposure through SMH, AVGO, TSM, MU, and AMAT over a single NVDA position.",
+      "파운드리, 메모리, 장비로 매수세가 확산. AI capex가 GPU 이후 병목 자산으로 번지는 흐름": "Buying broadened into foundry, memory, and equipment names as AI capex spreads into post-GPU bottlenecks.",
+      "개별주보다 바스켓 또는 ETF 접근. 장기금리 재상승 시 장비·메모리 고베타 변동성 관리": "Prefer basket or ETF exposure over single names. Manage high-beta equipment and memory volatility if long yields rise again.",
+      "기관군 A이 결제 네트워크를 새로 편입. 저자본·고마진·네트워크 효과가 강한 퀄리티 금융으로 자금이 이동": "기관군 A added payment networks, suggesting a shift toward capital-light, high-margin quality financials with network effects.",
+      "데이터, 지수, 거래소, 클리어링 인프라처럼 반복 매출과 가격결정력이 있는 금융 인프라 선호가 강화": "Preference strengthened for financial infrastructure with recurring revenue and pricing power: data, indices, exchanges, and clearing.",
+      "주가 부진 이후 기관군 A이 재편입. 스트리밍 승자와 광고/AI 추천 엔진 개선을 보는 저가매수 성격": "기관군 A re-entered after share weakness, treating Netflix as a streaming winner with ad and AI recommendation upside.",
+      "AI 데이터센터 전력 수요와 원전/전력 장비 테마가 공통 매수 상위권에 등장": "AI data-center power demand and nuclear/power-equipment themes appeared among the top common buys.",
+      "AI 데이터센터 전력 수요와 원전/전력 장비 테마가 공통 매수 상위권에 등장. 최근 유가·에너지 강세도 전력 인프라 관심을 보강": "AI data-center power demand and nuclear/power-equipment themes appeared among the top common buys. Recent oil and energy strength reinforces power-infrastructure interest.",
+      "전술 위성 유지. 유틸리티 규제, 장기 계약, 원전 정책과 금리 민감도를 함께 확인": "Maintain as tactical satellite exposure. Monitor utility regulation, long-term contracts, nuclear policy, and rate sensitivity.",
+      "기관군 A가 주택건설 관련 포지션을 늘림. 금리 안정 또는 주택 공급 부족에 대한 경기민감 가치 베팅": "기관군 A increased homebuilder exposure, a cyclical value bet on rate stabilization or housing supply shortages.",
+      "기관군 A가 일부 은행/소비자금융 익스포저를 줄임. 퀄리티 결제/데이터 금융과 레거시 금융의 선호도 차이가 커짐": "기관군 A reduced some bank/consumer-finance exposure, widening the preference gap between quality payments/data finance and legacy financials.",
+      "기관군 A가 일부 식료품, 철강, 주류 포지션을 줄이거나 정리. 자본이 AI 플랫폼·주택·항공 쪽으로 이동": "기관군 A reduced or exited some grocery, steel, and alcohol positions as capital shifted toward AI platforms, housing, and aerospace.",
+      "Q2 분기 데이터의 강한 주식 위험선호에도 금은 실질금리·달러·지정학 리스크 헤지로 역할 유지": "Despite stronger equity risk appetite in Q2 data, gold remains a hedge against real-rate, dollar, and geopolitical risks.",
+      "장기금리와 유가가 동시에 흔들리는 구간에서 금은 실질금리·달러·지정학 리스크 헤지 역할을 유지": "When long yields and oil move together, gold remains a hedge against real-rate, dollar, and geopolitical risks.",
+      "Core 후보로 승격. 단, AI 검색 경쟁과 규제 리스크 때문에 단일 과집중은 피함": "Upgraded to core candidate, but avoid single-name concentration due to AI search competition and regulatory risk.",
+      "Core 유지. 밸류에이션 부담이 있으면 신규 자금은 분할 접근": "Keep as core; add new capital gradually if valuation is stretched.",
+      "위성 포지션. NVDA 단일주보다 SMH, AVGO, TSM, MU, AMAT를 섞는 방식 선호": "Satellite position; prefer a mix of SMH, AVGO, TSM, MU, and AMAT over NVDA-only exposure.",
+      "개별주보다 바스켓 또는 ETF 접근. 메모리 사이클 변동성은 별도 관리": "Prefer basket/ETF exposure over single names; manage memory-cycle volatility separately.",
+      "Core 보조 후보. 경기 둔화보다 규제와 결제 수수료 압박을 더 중요하게 점검": "Core-support candidate; monitor regulation and payment-fee pressure more than cyclical slowdown.",
+      "퀄리티 위성 후보. 금리 급등 시 멀티플 압축 가능성은 관리": "Quality satellite candidate; manage multiple compression risk if rates jump.",
+      "위성 후보. 가입자 성장 둔화와 콘텐츠 비용 리스크 때문에 Core 편입은 신중": "Satellite candidate; be cautious making it core due to subscriber growth and content cost risk.",
+      "전술 위성. 유틸리티 규제, 장기 계약, 원전 정책 리스크 확인": "Tactical satellite; monitor utility regulation, long-term contracts, and nuclear policy risk.",
+      "경기민감 위성. 모기지 금리 재상승 시 빠르게 훼손될 수 있음": "Cyclical satellite; vulnerable if mortgage rates rise again.",
+      "은행 단일주 추격보다 XLF 또는 퀄리티 금융 위주 접근": "Prefer XLF or quality financials over chasing single bank stocks.",
+      "단순 저PER 가치주보다 구조적 성장 또는 명확한 현금흐름 개선이 있는 종목만 선별": "Select only names with structural growth or clear cash-flow improvement, not low-P/E value alone.",
+      "금 5~8% 보험 비중 유지. 금광주는 변동성이 커서 소액 위성으로 제한": "Keep gold at 5-8% as insurance; limit gold miners to small satellite exposure.",
+      "금 8~12% 완충 비중. 금광주는 변동성이 커서 소액 위성으로 제한": "Keep gold at an 8-12% buffer allocation; limit gold miners to a small satellite position.",
+      "8월 20일 유가 급등과 에너지주 강세가 확인. 공개 데이터로는 현물 원유가 보이지 않아 ETF/에너지주로 보조 추적": "The August 20 oil spike and energy-stock strength were confirmed. Because public position data cannot show physical crude, track exposure through ETFs and energy equities.",
+      "Core보다 Tactical. 지정학 프리미엄 완화나 유가 급락 시 빠르게 축소": "Treat as tactical rather than core. Reduce quickly if geopolitical premium fades or oil drops sharply.",
+      "시장 가격 기준: 2026-08-20~21<br>직접 보유 신호: 제한적": "Market price basis: 2026-08-20 to 2026-08-21<br>Direct holding signal: limited",
+      "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후": "Holding date: 2026-06-30<br>Checked around: 2026-08-14",
+      "매주": "Weekly",
+      "가격·금리·원자재 체크": "Check prices, rates, commodities",
+      "AI 리더십이 실적과 같이 가는지, 장기금리가 다시 뛰는지?": "Is AI leadership supported by earnings, and are long rates rising again?",
+      "장기금리 4.7~5.3%대 압력이 완화되는지, 유가/금 강세가 지속되는지?": "Does pressure from 4.7-5.3% long yields ease, and do oil/gold trends persist?",
+      "신규 자금은 분할, 과열 종목은 추격 회피": "Deploy new capital gradually; avoid chasing overheated names.",
+      "신규 주식은 분할, 현금·금/원자재 완충 유지": "Stage new equity buys and keep cash plus gold/commodity buffers.",
+      "매월 말": "Month-end",
+      "섹터 ETF 상대강도 확인": "Check sector ETF relative strength",
+      "SMH/XLK에서 XLF/XLI/XLE로 자금이 확산되는지?": "Are flows broadening from SMH/XLK into XLF/XLI/XLE?",
+      "SMH/XLK에서 XLF/XLE/GLD로 방어적 확산이 이어지는지?": "Is defensive broadening from SMH/XLK into XLF/XLE/GLD continuing?",
+      "Satellite만 조정": "Adjust satellite positions only.",
+      "Core는 유지, Satellite와 Tactical만 조정": "Keep core positions; adjust only satellite and tactical exposure.",
+      "Q3 2026 분기 데이터 업데이트": "Q3 2026 quarterly update",
+      "Q2의 GOOGL, V/MA, SPGI/ICE, AI 반도체 매수가 반복됐나?": "Did Q2 buying in GOOGL, V/MA, SPGI/ICE, and AI semis repeat?",
+      "2분기 연속 매수는 Core 후보로 승격": "Two consecutive quarters of buying upgrades a name to core candidate.",
+      "2분기 연속 매수는 Core 후보, 1회성 매수는 Watchlist 유지": "Two consecutive quarters of buying upgrades a name to core candidate; one-off buying remains watchlist.",
+      "Q2 2026 기준 시점": "Q2 2026 reference point",
+      "Q2 2026 분기 데이터는 2026-06-30 보유분이며, 2026-08-14 전후 업데이트 사이클에서 확인.": "Q2 2026 data reflects holdings as of 2026-06-30 and was checked around the 2026-08-14 disclosure cycle.",
+      "분기 데이터는 실제 매수일과 현재 보유 여부를 보여주지 않는다.": "Quarterly data does not show the actual purchase date or current holding status.",
+      "기관군 A의 Alphabet 확대": "기관군 A's Alphabet increase",
+      "공개 시장 데이터는 기관군 A가 Q2에 Alphabet 보유를 대폭 늘렸다고 보도.": "Public market data reported that 기관군 A materially increased Alphabet in Q2.",
+      "기관군 A 신규 6종목": "기관군 A's six new positions",
+      "공개 시장 데이터는 기관군 A의 Netflix, ICE, Visa, Mastercard, S&P Global, Alcon 신규 편입을 보도.": "Public market data reported 기관군 A's new positions in Netflix, ICE, Visa, Mastercard, S&P Global, and Alcon.",
+      "Risk Mode 64": "Risk Mode 64",
+      "Risk Mode 56": "Risk Mode 56",
+      "2026-09-04 주간 점검 반영. 공개 공유용 브랜치에서는 기관군명과 외부 리서치 경로을 임시 비공개 처리했다. 대시보드는 선택된 기관군의 공통 신규 매수, 전량 매도, 섹터 축소 이유, 현금/주식/원자재 가이드를 추적한다.": "Weekly check reflected on 2026-09-04. For the public-sharing version, house names and external research paths are temporarily hidden. The dashboard tracks common new buys, full exits, sector de-risking rationale, and cash/equity/commodity guidance from selected houses.",
+      "Q 분기 데이터의 AI·퀄리티 매수 신호는 유지. 다만 장기금리·유가·소비 둔화 압력 때문에 신규 주식 매수는 분할, 현금/금·원자재 완충 비중은 상향": "Q data still supports AI and quality buying signals. However, long-rate, oil, and consumer-slowdown pressure argue for staged equity buying and a higher cash/gold/commodity buffer.",
+      "보유 기준 2026-06-30 / 업데이트 2026-08-14": "Holding date 2026-06-30 / checked 2026-08-14",
+      "Q 2026 분기 데이터 반영": "Q 2026 quarterly data update",
+      "Q 분기 데이터 유지": "Q data maintained",
+      "7일 가격 그래프를 2026-09-04 실행 기준으로 갱신": "7-day price charts refreshed as of the 2026-09-04 run.",
+      "리스크 유지": "Risk maintained",
+      "금리 완화에 따른 기술주 반등은 긍정적이나, 유가·금 변동성과 고밸류 부담은 계속 점검": "The tech rebound from easing rates is constructive, but oil/gold volatility and high valuation pressure still need monitoring.",
+      "기관군 A가 결제 네트워크를 새로 편입. 저자본·고마진·네트워크 효과가 강한 퀄리티 금융으로 자금이 이동": "기관군 A added payment networks, suggesting a shift toward capital-light, high-margin quality financials with network effects.",
+      "주가 부진 이후 기관군 A가 재편입. 스트리밍 승자와 광고/AI 추천 엔진 개선을 보는 저가매수 성격": "기관군 A re-entered after share weakness, treating Netflix as a streaming winner with ad and AI recommendation upside.",
+      "8월 20일 유가 급등과 에너지주 강세가 확인. 공개 데이터로는 현물 원유가 보이지 않아 ETF/에너지주로 보조 추적": "The August 20 oil spike and energy-stock strength were confirmed. Because public position data cannot show physical crude, track exposure through ETFs and energy equities.",
+      "2026-11-16 전후": "Around 2026-11-16",
+      "Q3 2026 분기 업데이트": "Q3 2026 quarterly update",
+      "Q2 2026 보유 기준 시점": "Q2 2026 holding reference point",
+      "공개 자료 기준 2Q 2026 업데이트 마감은 2026-08-14. 이번 대시보드는 2026-06-30 보유분을 기반으로 유지.": "The public 2Q 2026 업데이트 마감 was 2026-08-14. This dashboard continues to use holdings as of 2026-06-30.",
+      "실제 매수일·현재 보유 여부·숏/헤지 포지션은 알 수 없음.": "Actual purchase dates, current holding status, short positions, and hedges are unknown.",
+      "기관군 A의 Alphabet·주택 확대": "기관군 A's Alphabet and homebuilder increase",
+      "공개 시장 데이터는 익명 처리된 분기 데이터 추적 기관군가 Q2에 Alphabet 및 주택건설 익스포저를 확대하고 일부 금융·소비/레거시 가치주를 축소했다고 보도.": "Public market data reported that an anonymized tracked house increased Alphabet and homebuilder exposure in Q2 while reducing some financial, consumer, and legacy-value exposure.",
+      "해당 기관군 전체 자산에는 현금, 보험사업, 비상장 자산이 포함되어 분기 데이터만으로 총 리스크 선호를 단정할 수 없음.": "The house's total assets include cash, operating businesses, and private assets, so quarterly position data alone cannot define its overall risk appetite.",
+      "공개 시장 데이터 및 다수 보도는 익명 처리된 분기 데이터 추적 기관군의 Netflix, Visa, Mastercard, S&P Global, ICE, Alcon 신규 편입을 확인.": "Public market data and multiple reports confirmed the anonymized tracked house's new positions in Netflix, Visa, Mastercard, S&P Global, ICE, and Alcon.",
+      "확인 후 가격 반응이 있었으므로 추격매수 신호가 아니라 중기 스타일 변화로 해석.": "Because prices may have reacted after disclosure, treat this as a medium-term style change rather than a chase-buy signal.",
+      "AI/반도체 시그널": "AI/Semiconductor signal",
+      "Q 분기 데이터에서는 AI 인프라·반도체·공급망 보유가 유지되지만, 공개 시장 리뷰는 7월 반도체 조정과 가치/에너지 상대강도 개선을 지적.": "Q data still shows AI infrastructure, semiconductor, and supply-chain exposure, while public market reviews point to July semiconductor weakness and improving relative strength in value/energy.",
+      "컨센서스가 강해도 장기금리 상승 시 멀티플 압축 리스크가 커짐.": "Even with strong consensus, rising long-term rates increase multiple-compression risk.",
+      "공개 시장 데이터 기준 8월 20일 주식 하락, 장기금리 재상승, 유가·금/광산주 강세가 동시에 확인됨.": "Public market data showed an equity pullback, renewed long-rate pressure, and strength in oil, gold, and miners around August 20.",
+      "단기 시장 변동은 분기 데이터 신호보다 빠르게 변하므로 Core 자체를 급히 축소하기보다 신규 자금 속도 조절에 반영.": "Short-term market moves change faster than quarterly signals, so use them to pace new capital rather than abruptly cutting core positions.",
+      "Q2의 AI·퀄리티 매수 신호는 유효하지만 기준금리 인상 직후 반도체·전력 인프라가 급락했다. Core는 유지하되 신규 고베타 매수는 더 천천히 분할": "Q2 AI and quality buying signals remain valid, but semiconductors and power infrastructure sold off after the rate hike. Keep core positions and deploy new high-beta capital more slowly.",
+      "7일 가격 그래프를 2026-09-18 실행 기준으로 갱신": "7-day price charts refreshed as of the 2026-09-18 run.",
+      "리스크 하향": "Risk reduced",
+      "9월 16일 기준금리가 3.75~4.00%로 25bp 인상됨. 반도체·전력 인프라 급락까지 겹쳐 신규 고베타 매수 속도를 낮춤": "The policy range rose by 25bp to 3.75-4.00% on September 16. Combined with a sharp semiconductor and power-infrastructure selloff, this calls for slower high-beta buying.",
+      "분기 공통 시그널 종목이라도 금리 인상 직후 반등을 추격하지 말고 가격 안정과 실적 확인": "Even for names with common quarterly signals, do not chase post-hike rebounds; wait for price stabilization and earnings confirmation.",
+      "Q2 분기 데이터에서는 AI 칩과 네트워킹/ASIC 매수가 유지됐지만, 최근 7일 NVDA -4.3%, AVGO -6.8%로 금리 민감도가 다시 확인됨": "Q2 data still showed buying in AI chips and networking/ASICs, but NVDA fell 4.3% and AVGO 6.8% over the last seven days, confirming renewed rate sensitivity.",
+      "위성 포지션은 유지하되 신규 비중 확대는 가격 안정 후 분할. 단일주보다 SMH 또는 공급망 바스켓으로 변동성 분산": "Keep satellite exposure, but add only in stages after prices stabilize. Diversify through SMH or a supply-chain basket instead of relying on one stock.",
+      "Q2에는 파운드리·메모리·장비로 매수가 확산됐지만 최근 7일 TSM -3.8%, MU -9.8%, AMAT -11.4%, ASML -7.4%로 고베타 조정이 발생": "Q2 buying broadened into foundry, memory, and equipment, but the last seven days brought a high-beta correction: TSM -3.8%, MU -9.8%, AMAT -11.4%, and ASML -7.4%.",
+      "추가 매수는 2~3회 분할하고 손실 한도를 먼저 설정. 장기금리 안정 전까지 장비·메모리 비중은 목표치 하단 유지": "Split additional purchases into two or three tranches and set loss limits first. Keep equipment and memory exposure near the low end of target until long yields stabilize.",
+      "Q2에는 AI 데이터센터 전력 수요가 공통 매수 논리였지만 최근 7일 CEG -11.7%, GEV -2.7%로 장기금리와 고평가 부담이 표면화": "AI data-center power demand was a common Q2 buying thesis, but CEG fell 11.7% and GEV 2.7% over seven days as rate and valuation pressure surfaced.",
+      "전술 위성만 유지. 실적 추정치가 버티는지 확인하고 금리 안정 전 신규 추격매수는 보류": "Keep only tactical satellite exposure. Check whether earnings estimates hold and avoid chasing until rates stabilize.",
+      "기준금리 인상 직후 최근 7일 GLD -2.9%, GDX -6.7%로 금리·달러 충격을 받았지만 포트폴리오 헤지 역할은 유지": "After the rate hike, GLD fell 2.9% and GDX 6.7% over seven days, reflecting rate and dollar pressure, but their portfolio-hedge role remains.",
+      "금 8~12% 완충 비중은 유지하되 신규 매수는 분할. 금광주는 레버리지 변동성이 커 소액 위성으로 제한": "Keep an 8-12% gold buffer, adding only in stages. Limit miners to a small satellite because of their leveraged volatility.",
+      "최근 7일 USO는 +4.1%였지만 XLE는 -2.0%로 원유와 에너지 주식이 엇갈림. 공개 에너지 통계상 상업 원유 재고는 전주 대비 60만 배럴 감소": "USO rose 4.1% while XLE fell 2.0% over seven days, showing a split between crude and energy equities. Public energy data showed commercial crude inventories down 0.6 million barrels week over week.",
+      "원유는 Tactical만 허용. 에너지 주식 확인 없이 USO 강세만 추격하지 말고 재고·지정학 프리미엄을 함께 점검": "Treat crude as tactical only. Do not chase USO without confirmation from energy equities; monitor inventories and the geopolitical premium together.",
+      "9월 금리 인상 이후 장기금리 압력이 완화되는지, 원유 강세가 에너지 주식으로 확산되는지?": "After the September hike, does long-yield pressure ease, and does crude strength spread to energy equities?",
+      "Core는 유지, 신규 고베타 주식은 분할, 현금/단기채 20~30% 완충": "Keep core positions, stage new high-beta purchases, and hold a 20-30% cash/short-duration buffer.",
+      "원유와 에너지 주식 분화": "Crude and energy-equity divergence",
+      "Q2의 AI·퀄리티 매수 신호와 최근 반도체 공급망 반등이 맞물렸다. 다만 높은 정책금리 경로와 시장 집중도를 고려해 신규 고베타 매수는 분할 유지": "Q2 AI and quality buying signals now align with the semiconductor supply-chain rebound. Still, keep new high-beta buying staged because rates remain high and market leadership is concentrated.",
+      "7일 가격 그래프를 2026-09-25 실행 기준으로 갱신": "7-day price charts refreshed as of the 2026-09-25 run.",
+      "선별적 회복": "Selective recovery",
+      "반도체·AI 공급망은 강하게 반등했지만 높은 정책금리 경로와 원유·금융 약세가 지속. 전면 위험선호보다 AI 중심 선별 접근": "Semiconductor and AI supply chains rebounded strongly, but a high policy-rate path and weakness in oil and financials favor selective AI exposure over broad risk-on positioning.",
+      "Q2 분기 데이터의 AI 칩·네트워킹 매수 신호가 유지되는 가운데 최근 7일 NVDA +5.4%, AVGO +4.8%로 반등. 다만 금리와 밸류에이션 민감도는 여전": "Q2 AI-chip and networking buying signals remain intact, while NVDA rose 5.4% and AVGO 4.8% over seven days. Rate and valuation sensitivity remain.",
+      "최근 7일 MU +15.7%, LRCX +14.3%, AMAT +14.2%, ASML +8.9%, TSM +6.9%로 AI 메모리·장비 바스켓이 강하게 반등": "The AI memory and equipment basket rebounded sharply over seven days: MU +15.7%, LRCX +14.3%, AMAT +14.2%, ASML +8.9%, and TSM +6.9%.",
+      "Q2 기관 신호와 가격 추세가 다시 정렬됐지만 단기 급등 뒤 추격보다 2~3회 분할. 실적 추정치와 장기금리 확인": "Q2 institutional signals and price momentum have realigned, but use two or three tranches instead of chasing the short-term surge; monitor earnings estimates and long yields.",
+      "최근 7일 CEG +1.7%, GEV +2.9%로 일부 회복했지만 직전 낙폭을 모두 만회하지 못해 AI 전력 테마의 금리·고평가 민감도는 유지": "CEG rose 1.7% and GEV 2.9% over seven days, but neither fully recovered the prior drawdown, leaving the AI-power theme sensitive to rates and valuation.",
+      "전술 위성만 유지. 반도체 대비 상대강도 회복과 실적 추정치가 확인될 때만 추가": "Keep only tactical satellite exposure and add only after relative strength versus semiconductors and earnings estimates improve.",
+      "최근 7일 GLD +0.3%, GDX +0.8%로 안정. 높은 정책금리 전망에도 가격이 버텨 포트폴리오 헤지 역할은 유지": "GLD rose 0.3% and GDX 0.8% over seven days. Their resilience despite a high-rate outlook supports their portfolio-hedge role.",
+      "최근 7일 USO -4.7%, XLE -2.0%. 공개 에너지 통계상 9월 18일 상업 원유 재고는 전주 대비 300만 배럴 증가해 단기 공급 부담이 확대": "USO fell 4.7% and XLE 2.0% over seven days. Public energy data showed commercial crude inventories rising by 3.0 million barrels for the week ended September 18, increasing near-term supply pressure.",
+      "원유·에너지는 Tactical 관찰로 하향. 재고 감소 전환과 XLE 상대강도 회복 전까지 비중 확대 보류": "Downgrade crude and energy to tactical watch; avoid adding until inventories turn lower and XLE relative strength recovers."
+    };
+
+    function t(value) {
+      if (currentLang === "ko" || value == null) return value;
+      return i18n[value] || value;
+    }
+
+    function applyLanguageStaticText() {
+      document.documentElement.lang = currentLang;
+      $("#languageBtn").textContent = currentLang === "ko" ? "EN" : "KO";
+      $("#subtitleText").textContent = t("선택된 기관군의 공통 신규 매수, 전량 매도, 섹터 축소 이유, 현금/주식/원자재 가이드를 추적합니다.");
+      $("#factCheckBtn").textContent = t("검증");
+      $("#summaryCurrentTitle").textContent = t("현재 읽기");
+      $("#summaryCurrentText").textContent = t("Q2 기관 매수 신호와 반도체 공급망 반등은 일치하지만, 높은 금리와 좁은 시장 폭 때문에 선별 접근이 필요합니다.");
+      $("#summaryNextTitle").textContent = t("다음 확인");
+      $("#summaryNextText").textContent = t("Q3 분기 데이터에서 GOOGL, V/MA, SPGI/ICE, AI 반도체 매수가 반복되는지.");
+      $("#summaryDefenseTitle").textContent = t("방어 장치");
+      $("#summaryDefenseText").textContent = t("현금/단기채 20~30%, 금/원자재 8~12%를 변동성 완충재로 유지.");
+      $("#overviewTitle").textContent = t("현재 판단");
+      $("#cashBadge").textContent = t("현금 20~30% 유지");
+      $("#factCheckTitle").textContent = t("검증 로그");
+      $("#factCheckBadge").textContent = t("근거 확인 / 해석 분리");
+      $("#calendarTitle").textContent = t("업데이트 캘린더");
+      $("#calendarBadge").textContent = t("다음 핵심 체크: 2026년 11월 중순");
+      $("#factHeadItem").textContent = t("항목");
+      $("#factHeadStatus").textContent = t("상태");
+      $("#factHeadEvidence").textContent = t("검증 메모");
+      $("#factHeadCaveat").textContent = t("주의점");
+      $("#calendarHeadDate").textContent = t("시점");
+      $("#calendarHeadTask").textContent = t("할 일");
+      $("#calendarHeadQuestion").textContent = t("확인할 질문");
+      $("#calendarHeadAction").textContent = t("포트폴리오 행동");
+      const signalOptions = $("#signalFilter").options;
+      signalOptions[0].textContent = t("전체");
+      signalOptions[1].textContent = t("신규/확대");
+      signalOptions[2].textContent = t("축소/전량 매도");
+      signalOptions[3].textContent = t("의견 분화/관찰");
+    }
+
+    function renderKpis() {
+      $("#kpis").innerHTML = dashboard.kpis.map(item => `
+        <article class="card">
+          <div class="label">${t(item.label)}</div>
+          ${item.metric === "risk" ? renderRiskMeter() : `<div class="metric">${item.metric}</div><div class="note">${t(item.note)}</div>`}
+        </article>
+      `).join("");
+    }
+
+    function renderRiskMeter() {
+      const risk = dashboard.riskMode;
+      return `
+        <div class="risk-meter">
+          <div class="risk-value"><strong>${risk.score}</strong><span>/100</span></div>
+          <div class="risk-track"><span class="risk-marker" style="left:${risk.score}%"></span></div>
+          <div>
+            <div class="metric" style="font-size:18px">${risk.label}</div>
+            <div class="note">${t(risk.note)}</div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderTabs() {
+      $("#tabs").innerHTML = views.map(view => `
+        <button class="tab ${activeView === view.id ? "active" : ""}" data-view="${view.id}">${t(view.label)}</button>
+      `).join("");
+      document.querySelectorAll(".tab").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeView = btn.dataset.view;
+          $("#signalFilter").value = activeView === "all" ? "all" : activeView;
+          renderTabs();
+          renderTable();
+        });
+      });
+    }
+
+    function renderFilters() {
+      const previousSector = $("#sectorFilter").value || "전체";
+      const sectors = ["전체", ...new Set(dashboard.rows.map(row => row.sector))];
+      $("#sectorFilter").innerHTML = sectors.map(sector => `<option value="${sector}">${t(sector)}</option>`).join("");
+      $("#sectorFilter").value = sectors.includes(previousSector) ? previousSector : "전체";
+      $("#sectorFilter").onchange = renderTable;
+      $("#signalFilter").onchange = () => {
+        activeView = $("#signalFilter").value;
+        renderTabs();
+        renderTable();
+      };
+    }
+
+    function renderChecklist() {
+      $("#checklist").innerHTML = dashboard.checklist.map(item => `
+        <div class="status-item">
+          <span class="dot ${item.status}"></span>
+          <div>
+            <strong>${t(item.title)}</strong>
+            <div class="note">${t(item.text)}</div>
+          </div>
+          <span class="pill neutral">${currentLang === "ko" ? "check" : "check"}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderBars() {
+      $("#signalBars").innerHTML = dashboard.signalBars.map(item => `
+        <div class="bar-row">
+          <strong>${t(item.name)}</strong>
+          <div class="bar-track"><div class="bar-fill ${item.color}" style="width:${item.score}%"></div></div>
+          <span class="note">${item.score}</span>
+        </div>
+      `).join("");
+
+      $("#allocationGuide").innerHTML = `
+        <div class="label">${t("Current Allocation Guide")}</div>
+        ${dashboard.allocations.map(item => `
+          <div class="allocation">
+            <strong>${t(item.asset)}</strong>
+            <div class="bar-track"><div class="bar-fill ${item.color}" style="width:${parseInt(item.range, 10) || 20}%"></div></div>
+            <span class="pill neutral">${item.range}</span>
+          </div>
+        `).join("")}
+        <p class="note">${t("판단: 전량 현금화보다 현금 15~25%를 들고, Core 주식은 유지하며 AI/반도체는 분산합니다.")}</p>
+      `;
+    }
+
+    function filteredRows() {
+      const sector = $("#sectorFilter")?.value || "전체";
+      const signal = $("#signalFilter")?.value || activeView;
+      return dashboard.rows.filter(row => {
+        const sectorMatch = sector === "전체" || row.sector === sector;
+        const signalMatch = signal === "all" || row.type === signal;
+        return sectorMatch && signalMatch;
+      });
+    }
+
+    function renderTable() {
+      const rows = filteredRows();
+      const titleMap = {
+        all: t("공통 시그널"),
+        buy: t("공통적으로 새로 담거나 늘린 종목"),
+        sell: t("미련 없이 줄이거나 뺀 종목"),
+        watch: t("의견이 갈리는 종목")
+      };
+      $("#tableTitle").textContent = titleMap[$("#signalFilter").value] || titleMap[activeView] || "공통 시그널";
+      $("#tableMeta").textContent = currentLang === "ko"
+        ? `${rows.length}개 시그널 · 분기 데이터는 중기 자금 흐름으로 해석`
+        : `${rows.length}${t("개 시그널 · 분기 데이터는 중기 자금 흐름으로 해석")}`;
+      renderPriceMeta();
+      $("#tableHead").innerHTML = `
+        <tr>
+          <th>${t("섹터")}</th>
+          <th>${t("종목")} <span class="note">(${t("7일 가격")})</span></th>
+          <th>${t("움직임 + 이유")}</th>
+          <th>${t("가이드")}</th>
+          <th>${t("기관군")}</th>
+          <th>${t("확신도")}</th>
+        </tr>
+      `;
+      $("#tableBody").innerHTML = rows.map(row => `
+        <tr>
+          <td>${renderSector(row.sector)}</td>
+          <td>
+            <div class="stock-cell">
+              <span class="ticker">${row.ticker}</span>
+              <span class="stock-name">${row.name}</span>
+              ${renderTrend(row)}
+            </div>
+          </td>
+          <td>
+            <div class="thesis-cell">
+              <div class="move-line"><span class="pill ${row.type}">${t(row.move)}</span></div>
+              <ul class="mini-list reason-text">
+                <li>${t(row.reason)}</li>
+              </ul>
+              <div class="basis-text">${renderMovementBasis(row)}</div>
+            </div>
+          </td>
+          <td><div class="guide-cell">${t(row.guide)}</div></td>
+          <td><div class="house-cell">${renderGroupList(row.houses)}</div></td>
+          <td>${renderConfidence(row.confidence)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderGroupList(houses) {
+      return `<ul class="mini-list">${houses.split(",").map(item => `<li>${item.trim()}</li>`).join("")}</ul>`;
+    }
+
+    function renderMovementBasis(row) {
+      return t(row.basis || "보유 기준: 2026-03-31<br>확인 기준: 2026-05-15 전후");
+    }
+
+    function renderPriceMeta() {
+      const priceMeta = $("#priceMeta");
+      if (!priceMeta) return;
+      const tickers = Object.keys(priceData || {});
+      const generatedAt = priceData.__generated_at;
+      if (!tickers.length) {
+        priceMeta.textContent = t("가격 데이터 대기");
+        return;
+      }
+      const label = generatedAt ? new Date(generatedAt).toLocaleString(currentLang === "ko" ? "ko-KR" : "en-US", {
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }) : t("업데이트됨");
+      priceMeta.textContent = currentLang === "ko" ? `가격 ${tickers.length}개 · ${label}` : `Prices ${tickers.length} · ${label}`;
+    }
+
+    function renderSector(sector) {
+      const key = sector.toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+      return `<span class="sector-chip sector-${key}">${t(sector)}</span>`;
+    }
+
+    function renderConfidence(confidence) {
+      const scoreMap = { "높음": 88, "중상": 72, "중간": 56, "낮음": 36, "High": 88, "Med-High": 72, "Medium": 56, "Low": 36 };
+      const score = scoreMap[confidence] || 50;
+      const tone = score >= 80 ? "buy" : score >= 65 ? "neutral" : "watch";
+      return `
+        <div class="confidence">
+          <span class="pill ${tone}">${t(confidence)}</span>
+          <div class="confidence-track"><div class="confidence-fill" style="width:${score}%"></div></div>
+        </div>
+      `;
+    }
+
+    function renderTrend(row) {
+      const symbols = row.symbols || [row.ticker];
+      const symbol = symbols.find(item => priceData[item]) || symbols[0];
+      const item = priceData[symbol];
+      if (!item || !Array.isArray(item.prices) || item.prices.length < 2) {
+        return `
+          <div class="trend-cell">
+            <svg class="sparkline" viewBox="0 0 132 34" aria-label="${t("가격 데이터 없음")}">
+              <line x1="4" y1="17" x2="128" y2="17" stroke="#dce1e8" stroke-width="2" stroke-linecap="round"></line>
+            </svg>
+            <div class="trend-meta"><span>${symbol}</span><span class="trend-flat">${t("데이터 대기")}</span></div>
+          </div>
+        `;
+      }
+      const values = item.prices.map(point => Number(point.close)).filter(Number.isFinite);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const span = max - min || 1;
+      const points = values.map((value, index) => {
+        const x = 4 + (index * 124 / Math.max(values.length - 1, 1));
+        const y = 29 - ((value - min) * 24 / span);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(" ");
+      const change = Number(item.change_pct || 0);
+      const tone = change > 0.15 ? "trend-up" : change < -0.15 ? "trend-down" : "trend-flat";
+      const color = change > 0.15 ? "#1f8f63" : change < -0.15 ? "#c84646" : "#657083";
+      const label = `${change >= 0 ? "+" : ""}${change.toFixed(1)}%`;
+      const sourceNote = symbols.length > 1 ? `${symbol} ${t("대표")}` : symbol;
+      return `
+        <div class="trend-cell">
+          <svg class="sparkline" viewBox="0 0 132 34" aria-label="${symbol} ${t("1주 가격 추세")}">
+            <polyline points="${points}" fill="none" stroke="${color}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></polyline>
+            <circle cx="${points.split(" ").at(-1).split(",")[0]}" cy="${points.split(" ").at(-1).split(",")[1]}" r="3" fill="${color}"></circle>
+          </svg>
+          <div class="trend-meta"><span>${sourceNote}</span><span class="${tone}">${label}</span></div>
+        </div>
+      `;
+    }
+
+    async function loadPriceData() {
+      try {
+        const response = await fetch("prices.json?ts=" + Date.now(), { cache: "no-store" });
+        if (!response.ok) return;
+        const payload = await response.json();
+        priceData = payload.tickers || {};
+        priceData.__generated_at = payload.generated_at;
+      } catch (error) {
+        priceData = {};
+      }
+    }
+
+    async function loadDashboardData() {
+      try {
+        const response = await fetch("dashboard_public_data.json?ts=" + Date.now(), { cache: "no-store" });
+        if (!response.ok) return;
+        const payload = await response.json();
+        for (const key of ["riskMode", "kpis", "signalBars", "allocations", "checklist", "rows", "calendar", "sources", "factChecks"]) {
+          if (payload[key]) dashboard[key] = payload[key];
+        }
+        dashboard.externalUpdatedAt = payload.updated_at || null;
+      } catch (error) {
+        dashboard.externalUpdatedAt = null;
+      }
+    }
+
+    function renderCalendar() {
+      $("#calendarRows").innerHTML = dashboard.calendar.map(item => `
+        <tr>
+          <td><strong>${t(item.date)}</strong></td>
+          <td>${t(item.task)}</td>
+          <td>${t(item.question)}</td>
+          <td>${t(item.action)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function bindCopy() {
+      $("#copyBtn").addEventListener("click", async () => {
+        const rows = filteredRows().map(row => `${row.ticker} | ${row.move} | ${row.reason} | ${row.guide}`).join("\n");
+        await navigator.clipboard.writeText(rows);
+        $("#copyBtn").textContent = "✓";
+        setTimeout(() => { $("#copyBtn").textContent = "⧉"; }, 1100);
+      });
+    }
+
+    function renderFactChecks() {
+      $("#factCheckRows").innerHTML = dashboard.factChecks.map(row => `
+        <tr>
+          <td><strong>${t(row.item)}</strong></td>
+          <td><span class="pill ${row.status === "확인됨" ? "buy" : "watch"}">${t(row.status)}</span></td>
+          <td>${t(row.evidence)}</td>
+          <td>${t(row.caveat)}</td>
+        </tr>
+      `).join("");
+      $("#factCheckSources").innerHTML = "";
+    }
+
+    function bindFactCheck() {
+      $("#factCheckBtn").addEventListener("click", () => {
+        $("#factCheckPanel").classList.toggle("hidden");
+        if (!$("#factCheckPanel").classList.contains("hidden")) {
+          $("#factCheckPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    }
+
+    function bindLanguageToggle() {
+      $("#languageBtn").addEventListener("click", () => {
+        currentLang = currentLang === "ko" ? "en" : "ko";
+        localStorage.setItem("dashboardLang", currentLang);
+        renderAll();
+      });
+    }
+
+    function renderAll() {
+      applyLanguageStaticText();
+      renderKpis();
+      renderTabs();
+      renderFilters();
+      renderChecklist();
+      renderBars();
+      renderTable();
+      renderCalendar();
+      renderFactChecks();
+    }
+
+    async function init() {
+      await loadDashboardData();
+      await loadPriceData();
+      renderAll();
+      bindCopy();
+      bindFactCheck();
+      bindLanguageToggle();
+    }
+
+    init();
+  </script>
+</body>
+</html>

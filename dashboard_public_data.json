@@ -1,0 +1,373 @@
+{
+  "updated_at": "2026-09-25",
+  "note": "2026-09-25 주간 점검 반영. 신규 분기 업데이트 윈도우는 아직 아니므로 Q2 보유 기준 신호는 유지했다. 최근 7일 반도체·AI 공급망은 강하게 반등했지만 원유·에너지·레거시 금융은 약해 리스크 모드는 소폭 상향하되 현금 완충은 유지했다.",
+  "riskMode": {
+    "score": 56,
+    "label": "Balanced",
+    "note": "Q2의 AI·퀄리티 매수 신호와 최근 반도체 공급망 반등이 맞물렸다. 다만 높은 정책금리 경로와 시장 집중도를 고려해 신규 고베타 매수는 분할 유지"
+  },
+  "kpis": [
+    {
+      "label": "Latest Data",
+      "metric": "Q2 2026",
+      "note": "보유 기준 2026-06-30 / 업데이트 2026-08-14"
+    },
+    {
+      "label": "Strongest Signal",
+      "metric": "AI + Quality",
+      "note": "GOOGL, MSFT, NVDA, AVGO, V, MA"
+    },
+    {
+      "label": "Risk Mode",
+      "metric": "risk",
+      "note": ""
+    },
+    {
+      "label": "Next Check",
+      "metric": "Nov",
+      "note": "Q3 2026 분기 데이터 반영"
+    }
+  ],
+  "signalBars": [
+    {
+      "name": "AI 인프라/반도체",
+      "score": 84,
+      "color": "blue"
+    },
+    {
+      "name": "플랫폼 빅테크",
+      "score": 85,
+      "color": "green"
+    },
+    {
+      "name": "퀄리티 금융/결제",
+      "score": 62,
+      "color": "violet"
+    },
+    {
+      "name": "에너지/전력/원자재",
+      "score": 48,
+      "color": "amber"
+    },
+    {
+      "name": "고밸류 소프트웨어",
+      "score": 22,
+      "color": "red"
+    }
+  ],
+  "allocations": [
+    {
+      "asset": "미국 주식",
+      "range": "50~60%",
+      "color": "green"
+    },
+    {
+      "asset": "AI 위성",
+      "range": "6~10%",
+      "color": "blue"
+    },
+    {
+      "asset": "금/원자재",
+      "range": "8~12%",
+      "color": "amber"
+    },
+    {
+      "asset": "현금/단기채",
+      "range": "20~30%",
+      "color": "violet"
+    }
+  ],
+  "checklist": [
+    {
+      "status": "green",
+      "title": "Q2 분기 데이터 유지",
+      "text": "신규 분기 데이터 윈도우는 없음. Q2 공통 매수/매도 신호는 유지"
+    },
+    {
+      "status": "blue",
+      "title": "가격 갱신",
+      "text": "7일 가격 그래프를 2026-09-25 실행 기준으로 갱신"
+    },
+    {
+      "status": "amber",
+      "title": "선별적 회복",
+      "text": "반도체·AI 공급망은 강하게 반등했지만 높은 정책금리 경로와 원유·금융 약세가 지속. 전면 위험선호보다 AI 중심 선별 접근"
+    },
+    {
+      "status": "red",
+      "title": "금지",
+      "text": "분기 공통 시그널 종목이라도 금리 인상 직후 반등을 추격하지 말고 가격 안정과 실적 확인"
+    }
+  ],
+  "rows": [
+    {
+      "type": "buy",
+      "ticker": "GOOGL/GOOG",
+      "symbols": [
+        "GOOGL",
+        "GOOG"
+      ],
+      "name": "Alphabet",
+      "sector": "Platform/AI",
+      "houses": "기관군 A, 기관군 B, 기관군 C",
+      "move": "대형 신규/확대 편입",
+      "reason": "기관군 A가 Alphabet을 대규모로 늘렸고, 여러 대형 운용사도 AI 인프라와 검색/클라우드 현금흐름을 함께 평가",
+      "guide": "Core 후보로 승격. 단, AI 검색 경쟁과 규제 리스크 때문에 단일 과집중은 피함",
+      "confidence": "높음",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "buy",
+      "ticker": "MSFT",
+      "symbols": [
+        "MSFT"
+      ],
+      "name": "Microsoft",
+      "sector": "AI/Software",
+      "houses": "기관군 A, 기관군 B",
+      "move": "공통 핵심 보유/확대",
+      "reason": "AI 인프라, 클라우드, 엔터프라이즈 소프트웨어가 결합된 방어적 성장 자산으로 기관 컨센서스 유지",
+      "guide": "Core 유지. 밸류에이션 부담이 있으면 신규 자금은 분할 접근",
+      "confidence": "높음",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "buy",
+      "ticker": "NVDA/AVGO",
+      "symbols": [
+        "NVDA",
+        "AVGO"
+      ],
+      "name": "NVIDIA / Broadcom",
+      "sector": "Semiconductor",
+      "houses": "기관군 A, 기관군 B",
+      "move": "AI 반도체 재강화",
+      "reason": "Q2 분기 데이터의 AI 칩·네트워킹 매수 신호가 유지되는 가운데 최근 7일 NVDA +5.4%, AVGO +4.8%로 반등. 다만 금리와 밸류에이션 민감도는 여전",
+      "guide": "위성 포지션은 유지하되 신규 비중 확대는 가격 안정 후 분할. 단일주보다 SMH 또는 공급망 바스켓으로 변동성 분산",
+      "confidence": "중상",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "buy",
+      "ticker": "TSM/MU/AMAT/ASML",
+      "symbols": [
+        "TSM",
+        "MU",
+        "AMAT",
+        "ASML"
+      ],
+      "name": "AI Supply Chain Basket",
+      "sector": "Semiconductor Equipment",
+      "houses": "기관군 A, 기관군 B, 기관군 C",
+      "move": "공급망 바스켓 확대",
+      "reason": "최근 7일 MU +15.7%, LRCX +14.3%, AMAT +14.2%, ASML +8.9%, TSM +6.9%로 AI 메모리·장비 바스켓이 강하게 반등",
+      "guide": "Q2 기관 신호와 가격 추세가 다시 정렬됐지만 단기 급등 뒤 추격보다 2~3회 분할. 실적 추정치와 장기금리 확인",
+      "confidence": "중상",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "buy",
+      "ticker": "V/MA",
+      "symbols": [
+        "V",
+        "MA"
+      ],
+      "name": "Visa / Mastercard",
+      "sector": "Quality Financials",
+      "houses": "기관군 A",
+      "move": "신규 편입",
+      "reason": "기관군 A가 결제 네트워크를 새로 편입. 저자본·고마진·네트워크 효과가 강한 퀄리티 금융으로 자금이 이동",
+      "guide": "Core 보조 후보. 경기 둔화보다 규제와 결제 수수료 압박을 더 중요하게 점검",
+      "confidence": "높음",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "buy",
+      "ticker": "SPGI/ICE",
+      "symbols": [
+        "SPGI",
+        "ICE"
+      ],
+      "name": "S&P Global / Intercontinental Exchange",
+      "sector": "Financial Data",
+      "houses": "기관군 A",
+      "move": "신규 편입",
+      "reason": "데이터, 지수, 거래소, 클리어링 인프라처럼 반복 매출과 가격결정력이 있는 금융 인프라 선호가 강화",
+      "guide": "퀄리티 위성 후보. 금리 급등 시 멀티플 압축 가능성은 관리",
+      "confidence": "중상",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "buy",
+      "ticker": "NFLX",
+      "symbols": [
+        "NFLX"
+      ],
+      "name": "Netflix",
+      "sector": "Platform/Consumer",
+      "houses": "기관군 A, 기관군 B",
+      "move": "신규 저가매수 신호",
+      "reason": "주가 부진 이후 기관군 A가 재편입. 스트리밍 승자와 광고/AI 추천 엔진 개선을 보는 저가매수 성격",
+      "guide": "위성 후보. 가입자 성장 둔화와 콘텐츠 비용 리스크 때문에 Core 편입은 신중",
+      "confidence": "중간",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "buy",
+      "ticker": "CEG/GEV",
+      "symbols": [
+        "CEG",
+        "GEV"
+      ],
+      "name": "Constellation Energy / GE Vernova",
+      "sector": "Energy/Power",
+      "houses": "기관군 A, 기관군 B",
+      "move": "전력 인프라 관심 확대",
+      "reason": "최근 7일 CEG +1.7%, GEV +2.9%로 일부 회복했지만 직전 낙폭을 모두 만회하지 못해 AI 전력 테마의 금리·고평가 민감도는 유지",
+      "guide": "전술 위성만 유지. 반도체 대비 상대강도 회복과 실적 추정치가 확인될 때만 추가",
+      "confidence": "중상",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "buy",
+      "ticker": "DHI/LEN",
+      "symbols": [
+        "DHI",
+        "LEN"
+      ],
+      "name": "D.R. Horton / Lennar",
+      "sector": "Housing/Cyclical",
+      "houses": "기관군 A",
+      "move": "주택건설 익스포저 확대",
+      "reason": "기관군 A가 주택건설 관련 포지션을 늘림. 금리 안정 또는 주택 공급 부족에 대한 경기민감 가치 베팅",
+      "guide": "경기민감 위성. 모기지 금리 재상승 시 빠르게 훼손될 수 있음",
+      "confidence": "중간",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "sell",
+      "ticker": "BAC/COF/ALLY",
+      "symbols": [
+        "BAC",
+        "COF",
+        "ALLY"
+      ],
+      "name": "Legacy Financials",
+      "sector": "Financials",
+      "houses": "기관군 A",
+      "move": "비중 축소",
+      "reason": "기관군 A가 일부 은행/소비자금융 익스포저를 줄임. 퀄리티 결제/데이터 금융과 레거시 금융의 선호도 차이가 커짐",
+      "guide": "은행 단일주 추격보다 XLF 또는 퀄리티 금융 위주 접근",
+      "confidence": "중상",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "sell",
+      "ticker": "KR/NUE/STZ",
+      "symbols": [
+        "KR",
+        "NUE",
+        "STZ"
+      ],
+      "name": "Legacy Value Basket",
+      "sector": "Value/Defensive",
+      "houses": "기관군 A",
+      "move": "축소/전량 매도",
+      "reason": "기관군 A가 일부 식료품, 철강, 주류 포지션을 줄이거나 정리. 자본이 AI 플랫폼·주택·항공 쪽으로 이동",
+      "guide": "단순 저PER 가치주보다 구조적 성장 또는 명확한 현금흐름 개선이 있는 종목만 선별",
+      "confidence": "중간",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "watch",
+      "ticker": "GLD/GDX",
+      "symbols": [
+        "GLD",
+        "GDX"
+      ],
+      "name": "Gold / Gold Miners",
+      "sector": "Commodity",
+      "houses": "Market proxy only",
+      "move": "보험 포지션 유지",
+      "reason": "최근 7일 GLD +0.3%, GDX +0.8%로 안정. 높은 정책금리 전망에도 가격이 버텨 포트폴리오 헤지 역할은 유지",
+      "guide": "금 8~12% 완충 비중은 유지하되 신규 매수는 분할. 금광주는 레버리지 변동성이 커 소액 위성으로 제한",
+      "confidence": "중상",
+      "basis": "보유 기준: 2026-06-30<br>확인 기준: 2026-08-14 전후"
+    },
+    {
+      "type": "watch",
+      "ticker": "XLE/USO",
+      "symbols": [
+        "XLE",
+        "USO"
+      ],
+      "name": "Energy ETF / Oil Proxy",
+      "sector": "Energy/Commodity",
+      "houses": "Market proxy only",
+      "move": "전술 관찰 상향",
+      "reason": "최근 7일 USO -4.7%, XLE -2.0%. 공개 에너지 통계상 9월 18일 상업 원유 재고는 전주 대비 300만 배럴 증가해 단기 공급 부담이 확대",
+      "guide": "원유·에너지는 Tactical 관찰로 하향. 재고 감소 전환과 XLE 상대강도 회복 전까지 비중 확대 보류",
+      "confidence": "중간",
+      "basis": "시장 가격 기준: 2026-09-25<br>직접 보유 신호: 제한적"
+    }
+  ],
+  "calendar": [
+    {
+      "date": "매주",
+      "task": "가격·금리·원자재 체크",
+      "question": "9월 금리 인상 이후 장기금리 압력이 완화되는지, 원유 강세가 에너지 주식으로 확산되는지?",
+      "action": "Core는 유지, 신규 고베타 주식은 분할, 현금/단기채 20~30% 완충"
+    },
+    {
+      "date": "매월 말",
+      "task": "섹터 ETF 상대강도 확인",
+      "question": "SMH/XLK에서 XLF/XLE/GLD로 방어적 확산이 이어지는지?",
+      "action": "Core는 유지, Satellite와 Tactical만 조정"
+    },
+    {
+      "date": "2026-11-16 전후",
+      "task": "Q3 2026 분기 업데이트",
+      "question": "Q2의 GOOGL, V/MA, SPGI/ICE, AI 반도체 매수가 반복됐나?",
+      "action": "2분기 연속 매수는 Core 후보, 1회성 매수는 Watchlist 유지"
+    }
+  ],
+  "sources": [],
+  "factChecks": [
+    {
+      "item": "Q2 2026 보유 기준 시점",
+      "status": "확인됨",
+      "evidence": "공개 자료 기준 2Q 2026 업데이트 마감은 2026-08-14. 이번 대시보드는 2026-06-30 보유분을 기반으로 유지.",
+      "caveat": "실제 매수일·현재 보유 여부·숏/헤지 포지션은 알 수 없음."
+    },
+    {
+      "item": "기관군 A의 Alphabet·주택 확대",
+      "status": "확인됨",
+      "evidence": "공개 시장 데이터는 익명 처리된 분기 데이터 추적 기관군가 Q2에 Alphabet 및 주택건설 익스포저를 확대하고 일부 금융·소비/레거시 가치주를 축소했다고 보도.",
+      "caveat": "해당 기관군 전체 자산에는 현금, 보험사업, 비상장 자산이 포함되어 분기 데이터만으로 총 리스크 선호를 단정할 수 없음."
+    },
+    {
+      "item": "기관군 A 신규 6종목",
+      "status": "확인됨",
+      "evidence": "공개 시장 데이터 및 다수 보도는 익명 처리된 분기 데이터 추적 기관군의 Netflix, Visa, Mastercard, S&P Global, ICE, Alcon 신규 편입을 확인.",
+      "caveat": "확인 후 가격 반응이 있었으므로 추격매수 신호가 아니라 중기 스타일 변화로 해석."
+    },
+    {
+      "item": "AI/반도체 시그널",
+      "status": "해석",
+      "evidence": "Q2 분기 데이터의 AI 인프라·반도체 보유가 유지되는 가운데 2026-09-25 갱신 가격 기준 최근 7일 MU +15.7%, LRCX +14.3%, AMAT +14.2%, ASML +8.9%로 공급망이 강하게 반등했다.",
+      "caveat": "기관 신호와 가격 추세가 다시 정렬됐지만 단기 집중도가 높다. 급등 종목 추격보다 실적·금리 확인 후 분할 접근."
+    },
+    {
+      "item": "Risk Mode 56",
+      "status": "해석",
+      "evidence": "반도체·플랫폼이 반등했지만 9월 정책 전망은 2026년 말 정책금리 중간값 4.1%, PCE 물가 3.7%로 높은 금리 환경의 지속 가능성을 시사한다.",
+      "caveat": "Risk Mode는 52에서 56으로만 소폭 상향. 현금/단기채 20~30%와 금 8~12% 완충은 유지."
+    },
+    {
+      "item": "원유와 에너지 주식 분화",
+      "status": "확인됨",
+      "evidence": "2026-09-25 갱신 가격 기준 최근 7일 USO -4.7%, XLE -2.0%. 공개 에너지 통계에서 9월 18일 기준 상업 원유 재고는 426.4백만 배럴로 전주 대비 3.0백만 배럴 증가했다.",
+      "caveat": "원유 선물 ETF는 롤 비용과 지정학 프리미엄 영향이 커 장기 Core보다 전술 포지션에 적합."
+    }
+  ]
+}
