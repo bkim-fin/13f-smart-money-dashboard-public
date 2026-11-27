@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-11-20",
-  "note": "2026-11-20 주간 점검 반영. Q3 보유 기준 공통 신규·확대와 공통 축소 신호를 반영했다. 경기민감·에너지의 선택적 매수와 플랫폼·은행 축소가 동시에 나타났고 시장 가격도 약해 Risk Mode를 30으로 낮췄다.",
+  "updated_at": "2026-11-27",
+  "note": "2026-11-27 점검. Q3 보유분을 6개 하우스의 원본과 재대조해 Coatue 자료 귀속을 정정하고 Pershing Square의 통합 보고 및 Q2 정정분을 반영했다. 시장 비교는 미국 11월 25일 종가까지.",
   "riskMode": {
     "score": 30,
     "label": "Defensive",
-    "note": "Q3 기관 신호는 전면 위험선호가 아니라 BSP·주택·항공·에너지의 선택적 매수다. 플랫폼·은행 축소와 반도체 의견 분화, 시장 약세를 감안해 현금 완충을 높임"
+    "note": "공통 신규 편입이 확인됐지만 시장에선 반도체 약세와 방어주 상대 강세가 지속. 현금 완충을 유지하고 기술주·원자재 동반 확대는 보류."
   },
   "kpis": [
     {
@@ -14,8 +14,8 @@
     },
     {
       "label": "Strongest Signal",
-      "metric": "Selective Value",
-      "note": "BSP, LEN, DAL, OXY/EOG, SSRM"
+      "metric": "Selective Entries",
+      "note": "BSP, ICE, MA, OKTA"
     },
     {
       "label": "Risk Mode",
@@ -62,7 +62,7 @@
       "color": "green"
     },
     {
-      "asset": "AI 위성",
+      "asset": "AI 위성 (미국 주식 내)",
       "range": "2~3%",
       "color": "blue"
     },
@@ -80,23 +80,23 @@
   "checklist": [
     {
       "status": "green",
-      "title": "Q3 분기 데이터 반영",
-      "text": "보유 기준 2026-09-30, 주요 추적 하우스의 11월 16일 전후 업데이트 비교 완료"
+      "title": "Q3 기관 자료 정정",
+      "text": "Coatue 원본과 Pershing Square 통합 보고를 반영. SSR Mining 공통 매수 표기를 철회."
     },
     {
       "status": "blue",
-      "title": "공통 신규·확대",
-      "text": "BSP 신규 편입, LEN·DAL 확대, 에너지 생산주와 SSR Mining 선별 매수"
+      "title": "신규 편입과 전량 제외",
+      "text": "공통 신규 BSP·ICE·MA·OKTA·PWR·UBER. HTZ 보통주는 두 곳에서 제외."
     },
     {
       "status": "amber",
-      "title": "AI 내부 의견 분화",
-      "text": "NVDA·META·TSM·AMAT·LRCX는 하우스별 매수와 매도가 엇갈려 공통 강세 신호가 아님"
+      "title": "반도체 약세·방어주 우위",
+      "text": "미국 11/18~11/25 종가: SPY -1.85%, QQQ -3.88%, SMH -8.07%, XLF +0.16%, XLP +1.23%, XLV +1.39%."
     },
     {
       "status": "red",
-      "title": "공통 축소",
-      "text": "GOOGL·BAC·COF·KR·NUE·GEV 축소 우세. 최근 시장 약세와 AI 부채 리스크를 감안해 추격 금지"
+      "title": "현금 완충 유지",
+      "text": "미국 주식 30~40% (AI 위성 2~3% 포함), 금·원자재 10~15%, 현금·단기채 40~50%. 예시: 37% / 13% / 50%."
     }
   ],
   "rows": [
@@ -110,7 +110,7 @@
       "sector": "Software Roll-up",
       "houses": "Berkshire Hathaway, Tiger Global",
       "move": "공통 신규 편입",
-      "reason": "Berkshire Hathaway가 2,069만 주(약 6.89억 달러), Tiger Global이 60만 주를 신규 편입. IPO 직후 두 하우스가 동시에 진입한 Q3의 가장 선명한 신규 컨센서스",
+      "reason": "Berkshire Hathaway 약 2,069만 주, Tiger Global 60만 주 신규 보고. 같은 분기에 편입됐으며 실제 매수일이 같다는 뜻은 아님.",
       "guide": "Satellite 후보. 인수합병 실행력은 강하지만 신규 상장주·레버리지·통합 리스크가 커 Core로 과대 편입하지 않음",
       "confidence": "높음",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
@@ -125,8 +125,8 @@
       "sector": "Housing/Cyclical",
       "houses": "Berkshire Hathaway, Bridgewater",
       "move": "공통 대폭 확대",
-      "reason": "Berkshire Hathaway가 Lennar A주를 98.6%, B주를 85.5% 늘렸고 Bridgewater도 216.5% 확대. 주택 공급 부족과 장기 가치에 대한 공통 베팅",
-      "guide": "경기민감 위성 후보. 모기지 금리 상승과 주문 취소율이 반대 시나리오이므로 분할 접근",
+      "reason": "Berkshire Hathaway는 A주 +98.6%, B주 +85.5%, Bridgewater는 A주 +216.5%. 매수 동기는 미공개이며, 11월 경기 조사에서 주택 구매 여력은 여전히 제약 요인.",
+      "guide": "모기지 금리와 신규 주문이 개선될 때만 소액 검토.",
       "confidence": "높음",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
     },
@@ -139,8 +139,8 @@
       "name": "Delta Air Lines",
       "sector": "Travel/Cyclical",
       "houses": "Berkshire Hathaway, Bridgewater",
-      "move": "공통 비중 확대",
-      "reason": "Berkshire Hathaway가 12.4%, Bridgewater가 97.7% 확대. 여행 수요와 현금흐름 정상화에 대한 경기민감 컨센서스",
+      "move": "공통 보유 주식 수 확대",
+      "reason": "Berkshire Hathaway +12.4%, Bridgewater +97.7%. 여행 수요는 11월 경기 조사에서 견조했으나 매수 동기는 확인되지 않음.",
       "guide": "소액 Satellite 후보. 유가 급등·경기침체·운임 하락 시 이익 민감도가 높음",
       "confidence": "중상",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
@@ -155,25 +155,9 @@
       "name": "Occidental / EOG Resources",
       "sector": "Energy",
       "houses": "Bridgewater, Berkshire Hathaway",
-      "move": "에너지 익스포저 확대",
-      "reason": "Bridgewater가 OXY를 신규 편입하고 EOG를 75.8%, Shell을 35.1%, Petrobras를 16.6% 확대. Berkshire Hathaway는 대형 OXY 포지션을 유지",
+      "move": "Bridgewater 확대·Berkshire 유지",
+      "reason": "Bridgewater는 OXY 신규·EOG 주식 수 +75.8%. Berkshire Hathaway의 OXY 보통주 수량은 유지. 에너지 업종 전체의 공통 매수로 보기 어려움.",
       "guide": "XLE 또는 우량 생산주 중심 Tactical. 지정학 프리미엄 축소와 2027년 공급 회복이 반대 시나리오",
-      "confidence": "중상",
-      "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
-    },
-    {
-      "type": "buy",
-      "ticker": "SSRM/GDX",
-      "symbols": [
-        "SSRM",
-        "GDX"
-      ],
-      "name": "SSR Mining / Gold Miners",
-      "sector": "Gold/Mining",
-      "houses": "Bridgewater, Coatue",
-      "move": "공통 금광주 확대",
-      "reason": "Coatue가 SSR Mining을 약 3,519만 달러 신규 편입했고 Bridgewater도 10.6% 확대. 현물 금보다 생산기업을 통한 선택적 원자재 익스포저",
-      "guide": "금광주는 금 가격과 운영비에 이중 레버리지되므로 원자재 전체 10~15% 안에서 소액 위성으로 제한",
       "confidence": "중상",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
     },
@@ -186,9 +170,9 @@
       ],
       "name": "NVIDIA / Meta",
       "sector": "AI/Platform",
-      "houses": "Tiger Global, ARK Invest, Bridgewater",
+      "houses": "Tiger Global, ARK Invest, Bridgewater, Coatue, Pershing Square",
       "move": "의견 분화",
-      "reason": "NVDA는 Tiger Global +7.2%, ARK +85.4%지만 Bridgewater -30.5%. META는 Bridgewater +99.9%, ARK +105.0%지만 Tiger Global -20.4%로 방향이 갈림",
+      "reason": "NVDA: Tiger Global +7.2%, ARK Invest +85.4%, Coatue +3.3%, Bridgewater -30.5%. META: Bridgewater·ARK Invest·Coatue 확대, Tiger Global·Pershing Square 축소.",
       "guide": "강한 공통 매수로 보지 않음. 가격 안정과 실적 추정치 유지가 확인될 때만 2~3% AI 위성 안에서 분할",
       "confidence": "높음",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
@@ -204,9 +188,9 @@
       ],
       "name": "AI Supply Chain",
       "sector": "Semiconductor",
-      "houses": "Bridgewater, Tiger Global, ARK Invest",
+      "houses": "Bridgewater, Tiger Global, ARK Invest, Coatue",
       "move": "공급망 내부 교체",
-      "reason": "Bridgewater는 MU +103.3%, AMAT +93.3%, TSM +127.0%, LRCX +13.0%였지만 Tiger Global은 TSM -35.8%, AMAT -26.4%, LRCX -30.7%. ARK는 TSM +10.5%",
+      "reason": "Coatue는 네 종목 모두 확대. TSM은 Bridgewater +127.0%, ARK Invest +10.5%, Coatue +5.9%, Tiger Global -35.8%. AMAT·LRCX도 Bridgewater와 Coatue는 확대, Tiger Global은 축소.",
       "guide": "반도체 바스켓 전면 확대보다 개별 실적과 주문 흐름을 확인. 최근 SMH 약세가 멈추기 전 추격 금지",
       "confidence": "높음",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
@@ -219,11 +203,11 @@
       ],
       "name": "Mastercard",
       "sector": "Quality Financials",
-      "houses": "Bridgewater",
-      "move": "신규 편입",
-      "reason": "Bridgewater가 약 5,143만 달러 규모로 신규 편입. 은행·소비자금융 축소와 대비되는 자본효율 높은 결제 네트워크 선호",
-      "guide": "Core 보조 후보지만 단일 하우스 신호. 규제와 결제 수수료 압박을 점검하며 분할 접근",
-      "confidence": "중간",
+      "houses": "Bridgewater, Coatue, Pershing Square",
+      "move": "두 곳 신규·한 곳 축소",
+      "reason": "Bridgewater와 Coatue 신규 편입. 분기말 보고가액 각각 약 5,143만·8억 8,338만 달러. 기존 보유자인 Pershing Square는 주식 수 -11.1%.",
+      "guide": "신규 편입은 확인됐으나 만장일치 신호는 아님. 수수료 규제와 소비 둔화를 점검.",
+      "confidence": "높음",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
     },
     {
@@ -236,9 +220,9 @@
       ],
       "name": "Mega-cap Platforms",
       "sector": "Platform/AI",
-      "houses": "Bridgewater, Tiger Global, ARK Invest",
+      "houses": "Berkshire Hathaway, Bridgewater, Tiger Global, Coatue, ARK Invest, Pershing Square",
       "move": "공통 축소 우세",
-      "reason": "Alphabet은 Bridgewater -65.2%, Tiger Global -42.3%, ARK -2.0%. Amazon은 Bridgewater -52.1%, Tiger Global -4.2%였고 Microsoft도 Bridgewater -68.9%. Berkshire Hathaway의 Alphabet은 유지",
+      "reason": "Alphabet은 Bridgewater·Tiger Global·Coatue·ARK Invest 축소, Berkshire Hathaway 유지. AMZN은 ARK Invest가 확대, MSFT는 Coatue가 +119.9% 확대해 플랫폼 전반을 일괄 매도로 볼 수 없음.",
       "guide": "Core 보유와 신규 매수는 구분. 급락만으로 비중을 늘리지 말고 밸류에이션과 AI 투자수익을 재확인",
       "confidence": "높음",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
@@ -254,7 +238,7 @@
       "sector": "Financials",
       "houses": "Berkshire Hathaway, Bridgewater",
       "move": "공통 축소·전량 매도",
-      "reason": "BAC는 Berkshire Hathaway -5.7%, Bridgewater -45.2%. COF는 Berkshire Hathaway -61.7%, Bridgewater 전량 매도. 신용비용과 경기민감 금융 리스크를 함께 낮춘 흐름",
+      "reason": "BAC: Berkshire Hathaway -5.7%, Bridgewater -45.2%. COF: Berkshire Hathaway -61.7%, Bridgewater 보통주 제외. 11월 경기 조사에서 대출 수요가 부진했지만 실제 축소 동기는 미공개.",
       "guide": "개별 소비자금융주 추격보다 XLF나 결제 네트워크를 선호. 연체율·대손충당금 개선 전 비중 확대 보류",
       "confidence": "높음",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
@@ -270,7 +254,7 @@
       "sector": "Legacy Value",
       "houses": "Berkshire Hathaway, Bridgewater",
       "move": "공통 비중 축소",
-      "reason": "KR은 Berkshire Hathaway -10.3%, Bridgewater -42.3%. NUE는 Berkshire Hathaway -14.9%, Bridgewater -92.1%. 단순 저평가 방어주·철강보다 선택적 성장과 경기민감주로 자본 이동",
+      "reason": "KR: Berkshire Hathaway -10.3%, Bridgewater -42.3%. NUE: Berkshire Hathaway -14.9%, Bridgewater -92.1%. 매각 대금의 재투자처나 매각 동기는 확인되지 않음.",
       "guide": "낮은 밸류에이션만으로 역발상 매수하지 말고 마진·수요 회복 확인",
       "confidence": "높음",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
@@ -284,9 +268,9 @@
       ],
       "name": "GE Vernova / Constellation Energy",
       "sector": "AI Power",
-      "houses": "Bridgewater, Tiger Global",
+      "houses": "Bridgewater, Tiger Global, Coatue",
       "move": "전력 테마 비중 축소",
-      "reason": "GEV는 Bridgewater -5.3%, Tiger Global -27.4%. CEG는 Bridgewater -94.5%. AI 전력 테마의 장기 논리와 별개로 높은 밸류에이션에서 차익실현이 확인됨",
+      "reason": "GEV: Bridgewater -5.3%, Tiger Global -27.4%, Coatue -3.8%. CEG: Bridgewater -94.5%. 차익실현이나 밸류에이션이 축소 원인이었는지는 확인 불가.",
       "guide": "기존 소액 위성만 유지하고 신규 매수는 가격·실적 안정 후 재검토",
       "confidence": "중상",
       "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후"
@@ -300,12 +284,12 @@
       ],
       "name": "Gold / Gold Miners",
       "sector": "Commodity",
-      "houses": "Bridgewater, Coatue",
-      "move": "현물 약세·광산주 선별 매수",
-      "reason": "SSR Mining 공통 확대와 달리 최근 7거래일 GLD -6.6%, GDX -12.2%. 기관의 광산주 선택과 단기 금 가격 추세가 엇갈림",
+      "houses": "Bridgewater",
+      "move": "금 ETF 약세·광산주 혼조",
+      "reason": "11월 18~25일 GLD -4.0%, GDX -1.2%. Q3 Bridgewater는 SSR Mining +10.6%, Newmont -22.0%. Coatue의 SSR Mining 신규 편입 근거는 정정.",
       "guide": "금·원자재 합산 10~15% 완충을 유지하되 신규 금광주 매수는 분할하고 손실 한도를 명확히 설정",
       "confidence": "중상",
-      "basis": "보유 기준: 2026-09-30<br>시장 가격 기준: 2026-11-20"
+      "basis": "시장 종가: 2026-11-25<br>보유 기준: 2026-09-30"
     },
     {
       "type": "watch",
@@ -317,11 +301,88 @@
       "name": "Energy ETF / Oil Proxy",
       "sector": "Energy/Commodity",
       "houses": "시장 가격 대체지표",
-      "move": "기관 매수·가격 약세 병존",
-      "reason": "에너지 생산주 매수 신호와 달리 최근 7거래일 XLE -3.3%, USO -3.8%. 단기 수급은 타이트하지만 2027년 공급 회복 전망이 상단을 제한",
-      "guide": "Core 확대보다 3~5% Tactical 한도. 가격 추세가 회복되지 않으면 기관 매수만 보고 추격하지 않음",
+      "move": "원유 대체지표 반등·에너지주 약세",
+      "reason": "11월 18~25일 USO +2.8%, XLE -0.6%. 원유 선물 ETF와 생산주 가격은 다르게 움직였으며, 11월 공급 전망은 2027년 회복을 가정.",
+      "guide": "유가 움직임을 에너지주 매수로 연결하지 않음. 원유는 소액 전술 관찰.",
       "confidence": "중상",
-      "basis": "보유 기준: 2026-09-30<br>시장 가격 기준: 2026-11-20"
+      "basis": "시장 종가: 2026-11-25<br>직접 보유 신호: 제한적"
+    },
+    {
+      "ticker": "ICE",
+      "symbols": [
+        "ICE"
+      ],
+      "name": "Intercontinental Exchange",
+      "sector": "Financial Data",
+      "houses": "Coatue, Pershing Square, Bridgewater",
+      "move": "두 곳 신규·한 곳 확대",
+      "reason": "Coatue와 Pershing Square가 약 9.97억·10.09억 달러 신규 보고. Bridgewater는 주식 수 +99.9%.",
+      "guide": "밸류에이션과 거래·데이터 매출을 확인하고 분할 검토.",
+      "type": "buy",
+      "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후",
+      "confidence": "높음"
+    },
+    {
+      "ticker": "OKTA/PWR/UBER",
+      "symbols": [
+        "OKTA",
+        "PWR",
+        "UBER"
+      ],
+      "name": "Okta / Quanta Services / Uber",
+      "sector": "Selected New Positions",
+      "houses": "Coatue, Bridgewater",
+      "move": "두 곳 신규 보고",
+      "reason": "세 종목 모두 Coatue와 Bridgewater에서 신규 보고. UBER는 Pershing Square가 기존 수량을 0.17% 줄여 의견 차이가 남음.",
+      "guide": "신규 보고 규모와 기존 보유자의 방향을 함께 확인.",
+      "type": "buy",
+      "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후",
+      "confidence": "높음"
+    },
+    {
+      "ticker": "NFLX",
+      "symbols": [
+        "NFLX"
+      ],
+      "name": "Netflix",
+      "sector": "Platform/Consumer",
+      "houses": "Bridgewater, Pershing Square, ARK Invest",
+      "move": "신규·공통 확대",
+      "reason": "Bridgewater 신규 보고, Pershing Square +17.8%, ARK Invest +28.5%.",
+      "guide": "콘텐츠 비용과 광고 매출을 확인. 플랫폼 전반의 매수 신호는 아님.",
+      "type": "buy",
+      "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후",
+      "confidence": "높음"
+    },
+    {
+      "ticker": "HTZ",
+      "symbols": [
+        "HTZ"
+      ],
+      "name": "Hertz",
+      "sector": "Travel/Cyclical",
+      "houses": "Pershing Square, Bridgewater",
+      "move": "공통 보통주 전량 제외",
+      "reason": "두 하우스의 Q2 보통주가 Q3 보유표에서 사라짐. Q2 보고가액은 각각 약 3,396만·53만 달러.",
+      "guide": "실제 처분일·동기 및 다른 증권을 통한 잔여 노출은 판단하지 않음.",
+      "type": "sell",
+      "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후",
+      "confidence": "높음"
+    },
+    {
+      "ticker": "ALC",
+      "symbols": [
+        "ALC"
+      ],
+      "name": "Alcon",
+      "sector": "Healthcare",
+      "houses": "Pershing Square",
+      "move": "신규 보고",
+      "reason": "Q2 원본과 추가 정정분 대비 Q3에 약 9.54억 달러 신규 보고.",
+      "guide": "단일 하우스 신호. 제품 매출과 밸류에이션 확인.",
+      "type": "buy",
+      "basis": "보유 기준: 2026-09-30<br>확인 기준: 2026-11-16 전후",
+      "confidence": "높음"
     }
   ],
   "calendar": [
@@ -329,7 +390,7 @@
       "date": "매주",
       "task": "가격·정책 경로 확인",
       "question": "SMH·QQQ 약세와 높은 정책금리가 기관의 Q3 선택적 매수 신호를 무력화하는지?",
-      "action": "Core는 유지하되 현금/단기채 40~50% 완충"
+      "action": "현금·단기채 완충 유지. 반도체가 시장 대비 안정되고 실적 추정치가 개선되면 주식 비중 재검토."
     },
     {
       "date": "매월 말",
@@ -340,47 +401,35 @@
     {
       "date": "2027-02-16 전후",
       "task": "Q4 2026 분기 업데이트",
-      "question": "BSP·LEN·DAL·에너지 매수가 2분기 연속 이어지고 플랫폼·은행 축소가 멈췄는지?",
+      "question": "BSP·ICE·MA 신규 신호가 이어지고 플랫폼·은행 축소가 완화되는지?",
       "action": "반복 매수만 Core 후보로 승격"
     }
   ],
   "sources": [],
   "factChecks": [
     {
-      "item": "Q3 2026 보유 기준",
+      "item": "Q3 비교 범위",
       "status": "확인됨",
-      "evidence": "주요 추적 하우스의 2026-09-30 보유분과 이전 분기를 주식 수 기준으로 비교.",
-      "caveat": "분기말 스냅샷이므로 실제 매매일·현재 보유·숏·헤지는 확인할 수 없음."
+      "evidence": "6개 하우스의 6월 30일·9월 30일 보유표를 동일 증권 식별자와 보유 주식 수로 비교. Pershing Square의 Q2 추가 보고 포함.",
+      "caveat": "옵션 제외. 비공개 포지션과 실제 거래일·동기는 알 수 없음."
     },
     {
-      "item": "BSP 공통 신규 편입",
+      "item": "기관명·공통 신호 정정",
       "status": "확인됨",
-      "evidence": "Berkshire Hathaway와 Tiger Global이 Q3에 Bending Spoons를 동시에 신규 편입.",
-      "caveat": "신규 상장 직후 포지션이라 가격 변동성과 추가 자금조달 위험이 큼."
+      "evidence": "Coatue로 잘못 귀속된 타 운용사 포지션을 제외. ICE·MA 공통 신규, HTZ 공통 보통주 제외를 확인.",
+      "caveat": "공통은 추적 표본 내 두 곳 이상이며 전체 시장을 뜻하지 않음."
     },
     {
-      "item": "LEN·DAL 공통 확대",
+      "item": "정책금리와 시장",
       "status": "확인됨",
-      "evidence": "Berkshire Hathaway와 Bridgewater가 Lennar와 Delta Air Lines 주식 수를 모두 확대.",
-      "caveat": "금리·유가·경기 변수에 민감한 경기순환 포지션으로 해석."
-    },
-    {
-      "item": "AI·반도체 의견 분화",
-      "status": "확인됨",
-      "evidence": "NVDA·META·TSM·AMAT·LRCX에서 운용사별 증감 방향이 엇갈림.",
-      "caveat": "컨센서스 매수로 부르기 어려우며 종목 선택 신호가 강함."
-    },
-    {
-      "item": "플랫폼·은행·레거시 가치 축소",
-      "status": "확인됨",
-      "evidence": "Alphabet, BAC, COF, KR, NUE에서 두 곳 이상의 축소 또는 전량 매도가 확인됨.",
-      "caveat": "가격 변동이 아닌 주식 수 변화를 사용했지만 포트폴리오 전체 헤지는 알 수 없음."
+      "evidence": "정책금리 3.75~4.00%. 11월 25일 경기 조사에서 소비는 정체에 가깝고 주택 거래는 약화. 같은 기간 10년물 지표는 약 22bp 하락해도 SMH는 8.1% 하락.",
+      "caveat": "거시 여건은 포지션 변화에 대한 맥락이며 운용사의 매매 이유를 입증하지 않음."
     },
     {
       "item": "Risk Mode 30",
       "status": "해석",
-      "evidence": "최근 7거래일 SPY -3.9%, QQQ -4.5%, SMH -9.4%, GLD -6.6%. 정책회의 의사록은 AI 투자 관련 부채와 순환금융의 손실 증폭 가능성을 지적.",
-      "caveat": "미국 주식 30~40%, 현금/단기채 40~50%, 금·원자재 10~15%, AI 위성 2~3%로 방어적 운영."
+      "evidence": "기술주 약세와 방어주 우위, 금 약세가 함께 나타나 기존 방어적 가이드를 유지.",
+      "caveat": "관찰용 시나리오. 주식·원자재 확대는 시장 폭과 실적이 함께 개선될 때 재검토."
     }
   ]
 }
